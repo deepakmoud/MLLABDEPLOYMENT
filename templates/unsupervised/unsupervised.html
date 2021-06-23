@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+    <title>Machine Learning Lab</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+        <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+            <ul class="nav navbar-nav navbar-right">
+           <li><a href="/">HOME</a></li>
+           </ul>
+        </a>
+    </nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">
+    
+                <img src="{{ url_for('static',filename = 'image/Unsupervised-learning.gif')  }}" class="img-fluid"
+                    style="width: auto; height: auto;  max-width: 550px;max-height: 600px;">
+                    
+            </div>
+    
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
+                <h1>Unsupervised Machine Learning Models</h1>
+                <h4 style="color: sandybrown;text-allign='justify'">unsupervised learning techniques operate without known outputs or observations – that is, these techniques are not trying to predict any specific outcomes. Instead, unsupervised techniques attempt to uncover patterns within data sets. Unsupervised learning is a useful approach for problems that do not have sufficient output or example data to train a supervised model.</h4>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <h2>&#10032; Clustering</h2>
+                        <ul>
+                            <li>K Means Clusterin</li>
+                            <li>Hierarchical Clustering</li>
+                            <li>Density Based Clustering</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+    
+                        <h2>&#10032; Association</h2>
+                        <ul>
+    
+                            <li>Apriori Algorithm</li>
+                            <li>Frequent pattern Growth Algorithm</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Unsupervised Machine Learning: Clustering</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/K_means_Clustering.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title"> K Means Clustering</h5>
+                        <p class="card-text"> K-Means Clustering is an Unsupervised Learning algorithm, which groups the unlabeled dataset into different clusters. Here K defines the number of pre-defined clusters that need to be created in the process, as if K=2, there will be two clusters, and for K=3, there will be three clusters, and so on.
+
+It is an iterative algorithm that divides the unlabeled dataset into k different clusters in such a way that each dataset belongs only one group that has similar properties.</p>
+                        <a href="/unsupervised/kmeans/kmeans"><button type="button"
+                                class="btn btn-outline-primary">Train k Means Clustering Algorithm &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/hierarch.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Hierarchical Clustering</h5>
+                        <p class="card-text"> This algorithm, we develop the hierarchy of clusters in the form of a tree, and this tree-shaped structure is known as the dendrogram.
+
+Sometimes the results of K-means clustering and hierarchical clustering may look similar, but they both differ depending on how they work. As there is no requirement to predetermine the number of clusters as we did in the K-Means algorithm.
+
+The hierarchical clustering technique has two approaches:
+
+Agglomerative: Agglomerative is a bottom-up approach, in which the algorithm starts with taking all data points as single clusters and merging them until one cluster is left.
+Divisive: Divisive algorithm is the reverse of the agglomerative algorithm as it is a top-down approach.
+                        </p>
+                        <a href="/unsupervised/hierarchical/hierarchical"><button type="button"
+                                class="btn btn-outline-primary">Train Hierarchical Clustering Model &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/DBSCAN_tutorial.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Density Based Clustering</h5>
+                        <p class="card-text"> Density-based spatial clustering of applications with noise (DBSCAN) is a well-known data clustering algorithm that is commonly used in data mining and machine learning.
+Based on a set of points (let’s think in a bidimensional space as exemplified in the figure), DBSCAN groups together points that are close to each other based on a distance measurement (usually Euclidean distance) and a minimum number of points. It also marks as outliers the points that are in low-density regions.
+Parameters:
+The DBSCAN algorithm basically requires 2 parameters:
+                        </p>
+                        <a href="/unsupervised/dbscan/dbscan"><button type="button"
+                                class="btn btn-outline-primary">Train Density based  Clustering Model &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+
+<br> <br>
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Unsupervised Machine learning : Association</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/aprori.jpg')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">Apriori Algorithm</h5>
+                        <p class="card-text">The Apriori algorithm uses frequent itemsets to generate association rules, and it is designed to work on the databases that contain transactions. With the help of these association rule, it determines how strongly or how weakly two objects are connected. This algorithm uses a breadth-first search and Hash Tree to calculate the itemset associations efficiently. It is the iterative process for finding the frequent itemsets from the large dataset..</p>
+                            <a href="/supervised/logisticregression/logisticregression"><button type="button"
+                                class="btn btn-outline-primary">Aprori Algoritm Implementation &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="col-xs-12 col-md-4 " style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center><img src="{{ url_for('static',filename = 'image/FP growth.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Frequent patter Growth  Algorithm</h5>
+                        <p class="card-text">This algorithm is an improvement to the Apriori method. A frequent pattern is generated without the need for candidate generation. FP growth algorithm represents the database in the form of a tree called a frequent pattern tree or FP tree.
+
+This tree structure will maintain the association between the itemsets. The database is fragmented using one frequent item. This fragmented part is called “pattern fragment”. The itemsets of these fragmented patterns are analyzed. Thus with this method, the search for frequent itemsets is reduced comparatively.</p>
+                       <a href="/supervised/decisiontree/tree"><button type="button"
+                                class="btn btn-outline-primary">Frequent Pattern Algorithm implementation &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+           
+    
+        </div>
+    </div>
+
+
+
+<br> <br>
+
+
+
+<!-- footer -->
+<br><br>
+<div class="fixed-bottom ">
+    <div class="bg-secondary " style="min-height: 40px;">
+
+        <marquee style="color:#fff; margin-top: 7px;">
+            <h9>Developed by Deepak Moud</h9>
+        </marquee>
+    </div>
+</div>
+<!-- change later-->
+<script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>

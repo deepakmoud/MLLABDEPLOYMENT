@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+    <title>Machine Learning Lab</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+        <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+            <ul class="nav navbar-nav navbar-right">
+           <li><a href="/">HOME</a></li>
+           </ul>
+        </a>
+    </nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">
+    
+                <img src="{{ url_for('static',filename = 'image/Supervised-LearningGIF1.gif')  }}" class="img-fluid"
+                    style="width: auto; height: auto;  max-width: 550px;max-height: 600px;">
+                    
+            </div>
+    
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 20px;">
+                <h1>Supervised Machine Learning Model</h1>
+                <h4 style="color: sandybrown; text-align:justify">Supervised techniques require a set of inputs and corresponding outputs to “learn from” in order to build a predictive model. Supervised learning algorithms learn by tuning a set of model parameters that operate on the model’s inputs, and that best fit the set of outputs. The goal of supervised machine learning is to train a model of the form y = f(x), to predict outputs, y based on inputs, x.</h4>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <h2>&#10032; Regression</h2>
+                        <ul>
+                            <li>Linear Regression </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="col-6">
+    
+                        <h2>&#10032; Classification</h2>
+                        <ul>
+    
+                            <li>Logistic Regression</li>
+                            <li>Decision Tree</li>
+                            <li>Naive Bayes </li>
+                            <li>Random Forest </li>
+                            <li>Support vector machine </li>
+                            <li>K Nearest Neighbor</li>
+                        </ul>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Supervised Machine Learning: Regression</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/LR.jpg')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Linear Regression </h5>
+                        <p class="card-text"> linear regression is a linear approach to modelling the relationship between a
+                            scalar response and one or more explanatory
+                            variables. The case of one explanatory variable in machine Learning is called simple linear
+                            regression.</p>
+                        <a href="/supervised/regression/linearRegression"><button type="button"
+                                class="btn btn-outline-primary">Train Linear Regression Model &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+            
+    
+    
+    
+        </div>
+    </div>
+
+<br> <br>
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Supervised Machine learning : Classification</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/logistic.png')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">Logistic Regression</h5>
+                        <p class="card-text">the logistic model is used to model the probability of a certain class or event
+                            existing such as pass/fail, win/lose, alive/dead or healthy/sick. This can be
+                            extended to model several classes of events such as determining whether an image contains a cat,
+                            dog, lion, etc.</p>
+                            <a href="/supervised/logisticregression/logisticregression"><button type="button"
+                                class="btn btn-outline-primary">Train Logistic Classification Model &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="col-xs-12 col-md-4 " style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center><img src="{{ url_for('static',filename = 'image/decisiontree.png')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Decision Tree</h5>
+                        <p class="card-text">A decision tree is a decision support tool that uses a tree-like model of
+                            decisions and their possible consequences, including chance event outcomes, resource costs, and
+                            utility.
+                            It is one way to display an algorithm that only contains conditional control statements.</p>
+                       <a href="/supervised/decisiontree/tree"><button type="button"
+                                class="btn btn-outline-primary">Train Decision Tree classification Model &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+           <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/naivebayes.png')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">Naive Bayes</h5>
+                        <p class="card-text">It is a classification technique based on Bayes’ Theorem with an assumption of independence among predictors. In simple terms, a Naive Bayes classifier assumes that the presence of a particular feature in a class is unrelated to the presence of any other feature..</p>
+                            <a href="/supervised/naivebayes/naivebayes"><button type="button"
+                                class="btn btn-outline-primary">Train Naive Bayes Classification Model &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+
+
+
+<br> <br>
+
+<div class="container">
+        <div class="row">
+    
+            
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/randomforest.png')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">Random Forest</h5>
+                        <p class="card-text">Random Forest is a popular machine learning algorithm that belongs to the supervised learning technique. It can be used for both Classification and Regression problems in ML. It is based on the concept of ensemble learning, which is a process of combining multiple classifiers to solve a complex problem and to improve the performance of the model.
+
+As the name suggests, "Random Forest is a classifier that contains a number of decision trees on various subsets of the given dataset and takes the average to improve the predictive accuracy of that dataset." </p>
+                            <a href="/supervised/randomforest/randomforest"><button type="button"
+                                class="btn btn-outline-primary">Train Random Forest  Model  &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="col-xs-12 col-md-4 " style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center><img src="{{ url_for('static',filename = 'image/svm.png')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Support Vector Machine</h5>
+                        <p class="card-text"> The goal of the SVM algorithm is to create the best line or decision boundary that can segregate n-dimensional space into classes so that we can easily put the new data point in the correct category in the future. This best decision boundary is called a hyperplane.
+
+SVM chooses the extreme points/vectors that help in creating the hyperplane. These extreme cases are called as support vectors, and hence algorithm is termed as Support Vector Machine.
+SVM chooses the extreme points/vectors that help in creating the hyperplane. These extreme cases are called as support vectors.</p>
+                       <a href="/supervised/svm/svm"><button type="button"
+                                class="btn btn-outline-primary">Train SVM classification Algorithm &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+           <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/knn.png')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">K Neearest Neighbor </h5>
+                        <p class="card-text">K-NN algorithm assumes the similarity between the new case/data and available cases and put the new case into the category that is most similar to the available categories.
+K-NN algorithm stores all the available data and classifies a new data point based on the similarity. This means when new data appears then it can be easily classified into a well suite category by using K- NN algorithm.
+K-NN algorithm can be used for Regression as well as for Classification but mostly it is used for the Classification problems.K-NN is a non-parametric and lazy learner algorithm
+</p>
+                            <a href="/supervised/knn/knn"><button type="button"
+                                class="btn btn-outline-primary">Train KNN Classification Model &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+
+
+<!-- footer -->
+<br><br>
+<div class="fixed-bottom ">
+    <div class="bg-secondary " style="min-height: 40px;">
+
+        <marquee style="color:#fff; margin-top: 7px;">
+            <h9>Developed by Deepak Moud</h9>
+        </marquee>
+    </div>
+</div>
+<!-- change later-->
+<script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>

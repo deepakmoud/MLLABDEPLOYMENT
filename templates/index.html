@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <title>Machine Learning Lab</title>
+</head>
+
+<body>
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+             <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 600px;min-height: 600px;">
+          
+              <li><a href="/aboutus">ABOUT US</a></li>
+            
+      </div>
+           
+        </a>
+        
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">
+
+                <img src="{{ url_for('static',filename = 'image/DanceBot-3-LG.gif')  }}" class="img-fluid"
+                    style="width: auto; height: auto; min-width: 400px;min-height: 400px;">
+
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
+                <h1>Machine Learning Lab Experiment Solutions</h1>
+                <br><br>
+                <h6>&#9989; “Artificial Intelligence, deep learning, machine learning — whatever you’re doing if you
+                    don’t understand it — learn it. Because otherwise you’re going to be a dinosaur within 3 years.”
+                    <br>~Mark Cuban</h6>
+                <br>
+                <h6>&#9989; “A baby learns to crawl, walk and then run. We are in the crawling stage when it comes to
+                    applying machine learning.” <br>~Dave Waters</h6>
+                <br>
+                <h6>&#9989; “Machine intelligence is the last invention that humanity will ever need to make.” <br>
+                    ~Nick Bostrom</h6>
+                <br><br>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="card mb-3">
+            
+                    <div class="card">
+                        <img style="max-height: 300px;" src="{{ url_for('static',filename = 'image/dp ml.jpg')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Data PreProcessing for ML</h5>
+                            <p class="card-text">Data preprocessing is a process of preparing the raw data and making it suitable for a machine learning model. It is the first and crucial step while creating a machine learning model. Data preprocessing is neccessory to train ml model.</p>
+            
+                            <a href="/preprocessing"><button type="button" class="btn btn-outline-primary">Data-Preprocessing for Machine Learning
+                                    &#9655;</button></a>
+                        </div>
+            
+            
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="card mb-3">
+
+                    <div class="card">
+                        <img style="max-height: 300px;"
+                            src="{{ url_for('static',filename = 'image/supervised ml.jpg')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Supervised Machine Learning</h5>
+                            <p class="card-text">Supervised learning is the machine learning task of learning a function
+                                that maps an
+                                input to an output based on example input-output pairs. It infers a function from
+                                labeled training data
+                                consisting of a set of training examples.</p>
+
+                            <a href="/supervised"> <button type="button" class="btn btn-outline-primary">Explore Supervised Machine Learning
+                                    &#9655;</button></a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="card mb-3">
+
+                    <div class="card">
+                        <img style="max-height: 300px;"
+                            src="{{ url_for('static',filename = 'image/unsupervised ml.jpg')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Unsupervised Machine Learning</h5>
+                            <p class="card-text">Unsupervised learning is a type of algorithm that learns patterns from
+                                untagged data.
+                                The hope is that through mimicry, the machine is forced to build a
+                                compact internal representation of its world and then generate imaginative content.</p>
+
+                            <a href="/unsupervised"><button type="button" class="btn btn-outline-primary">Explore Unsupervised Machine Learning &#9655;</button></a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+    <div class="fixed-bottom ">
+        <div class="bg-secondary " style="min-height: 40px;">
+
+            <marquee style="color:#fff; margin-top: 7px;">
+                <h9>Developed by Deepak Moud</h9>
+            </marquee>
+        </div>
+    </div>
+    <!-- change later-->
+    <script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>
