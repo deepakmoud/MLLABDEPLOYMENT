@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+
+    <title>ML Trainer</title>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+            <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+           <div style="margin-top: 10px; margin-Right: 10px; color: white;">
+                    <label> <a href="/feature" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                </div>
+           
+        </a>
+    </nav>
+    
+
+    <div class="container">
+    
+        <div class="jum" style="background-color: rgba(108, 117, 125, 0.7);">
+            <center>
+            <h1 class="display-10" style="color: #fff;">Principal Component Analysis </h1>
+            <h2 class="display-10" style="color: #fff;">Provide Detail</h2>
+            </center>
+            <br>
+    
+            <form method="POST" action="/feature/pca/pca" enctype="multipart/form-data">
+                <h4 style="color: #fff;">Upload your preprocessed dataset here:</h4>
+                <p style="color: beige;">( please upload  dataset to identify PCs. )</p>
+                <div class="input-group">
+                    
+                    <input type="file" class="form-control" name="my_dataset" placeholder="hi" accept=".csv,.xlsx">
+    
+                </div>
+                <div style="margin-top: 10px; margin-left: 20px; color: white;">
+                    <label> Data Must have Features and Class label. All columns except last column will be considered Features and last column will be considered Target</label>
+                </div>
+                
+                <br>
+                <div class="input-group">
+                    <span class="input-group-text">Model Name</span>
+                    <input type="text" value="PCA" name="name_of_model1" class="form-control">
+                </div>
+                <br>
+                <h4 style="color: white;">Type of Classification</h4>
+                <div class="form-check">
+                    <input class="form-check-input" value="binary" type="radio" name="classification" id="class1" checked>
+                    <label class="form-check-label" for="binary" style="color: whitesmoke;">
+                        Binary 
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" value="multiclass" type="radio" name="classification" id="class2" >
+                    <label class="form-check-label" for="multiclass" style="color: whitesmoke;">
+                       Multiclass  
+                    </label>
+                </div>
+                <br><br>
+                
+                <br>
+                <h4 style="color: white;">Do you like to do Data Standerization ?</h4>
+                <div class="form-check">
+                    <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1" style="color: whitesmoke;">
+                        Yes 
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2" style="color: whitesmoke;">
+                        No  
+                    </label>
+                </div>
+                <br><br>
+    
+                <button onclick="$('#loading').show();" type="submit" class="btn btn-outline-light">Train Model &#8987;
+                </button>
+            </form>
+            <br>
+            <div id="loading" style="display:none;">
+                <center><img class="img img-fluid" style="height:auto;width: auto;"src="{{ url_for('static' , filename = 'image/Lding.gif') }}" alt="" /></center>
+            </div>
+    
+    
+        </div>
+    </div>
+
+
+
+
+<!-- footer -->
+
+<br><br>
+<div class="fixed-bottom ">
+    <div class="bg-secondary " style="min-height: 40px;">
+
+        <marquee style="color:#fff; margin-top: 7px;">
+            <h9>Developed by Deepak Moud</h9>
+        </marquee>
+    </div>
+</div>
+<!-- change later-->
+<script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>
+

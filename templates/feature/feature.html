@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+    <title>Machine Learning Lab</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+        <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+            <ul class="nav navbar-nav navbar-right">
+           <li><a href="/">HOME</a></li>
+           </ul>
+        </a>
+    </nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">
+    
+                <img src="{{ url_for('static',filename = 'image/elliot.gif')  }}" class="img-fluid"
+                    style="width: auto; height: auto;  max-width: 550px;max-height: 600px;">
+                    
+            </div>
+    
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
+                <h1>Feature Engineering and Feature Selection</h1>
+                <h4 style="color: sandybrown;text-allign='justify'">Feature engineering is the process of using domain knowledge of the data to create features that make machine learning algorithms work. If feature engineering is done correctly, it increases the predictive power of machine learning algorithms by creating features from raw data that help facilitate the machine learning process. Feature Engineering is an art.
+                Feature selection is the process of reducing the number of input variables when developing a predictive model.Statistical-based feature selection methods involve evaluating the relationship between each input variable and the target variable using statistics and selecting those input variables that have the strongest relationship with the target variable.
+
+
+</h4>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <h2>&#10032; Feature Engineering</h2>
+                        <ul>
+                            <li>Principal Component Analysis(PCA)</li>
+                            <li>Linear discriminant analysis(LDA)</li>
+                            
+                    </div>
+                    <div class="col-6">
+    
+                        <h2>&#10032; Feature Selection</h2>
+                        <ul>
+    
+                            <li>Filter-based feature selection </li>
+                            <li>Wrapper and Embedded based  Feature Selection</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Feature Engineering</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/pca.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title"> Principal Component Analysis</h5>
+                        <p class="card-text"> Principal Component Analysis, or PCA, is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set.</p>
+                        <a href="/feature/pca/pca"><button type="button"
+                                class="btn btn-outline-primary">Find principal Components &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/lda.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Linear Discriminant Analysis</h5>
+                        <p class="card-text"> Linear Discriminant Analysis (LDA) is a very common technique for dimensionality reduction problems as a pre-processing step for machine learning and pattern classification applications
+                        </p>
+                        <a href="/feature/lda/lda"><button type="button"
+                                class="btn btn-outline-primary">LDA Implementation &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+        </div>
+    </div>
+
+<br> <br>
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Feature Selection</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card  zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/46072IMAGE2.gif')  }}" class="card-img-top"
+                            style="height: 275px;" alt="not found"> </center>
+                    <div class="card-body">
+                        <h5 class="card-title">Filter-based feature selection</h5>
+                        <p class="card-text">Filter feature selection methods use statistical techniques to evaluate the relationship between each input variable and the target variable, and these scores are used as the basis to choose (filter) those input variables that will be used in the model.</p>
+                            <a href="/feature/filter/filter"><button type="button"
+                                class="btn btn-outline-primary">Filter Based Feature selection Implementaion &#x270C;</button></a>
+                        
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+            <div class="col-xs-12 col-md-4 " style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center><img src="{{ url_for('static',filename = 'image/3_feature-image-.jpg')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Wrapper and Embedded based  Feature Selection</h5>
+                        <p class="card-text">It follows a greedy search approach by evaluating all the possible combinations of features against the evaluation criterion. The evaluation criterion is simply the performance measure </p>
+                       <a href="/feature/wrapper/wrapper"><button type="button"
+                                class="btn btn-outline-primary">Wrapper and embedded Based feature Selection implmentation &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+           
+    
+        </div>
+    </div>
+
+
+
+<br> <br>
+
+
+
+<!-- footer -->
+<br><br>
+<div class="fixed-bottom ">
+    <div class="bg-secondary " style="min-height: 40px;">
+
+        <marquee style="color:#fff; margin-top: 7px;">
+            <h9>Developed by Deepak Moud</h9>
+        </marquee>
+    </div>
+</div>
+<!-- change later-->
+<script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>
