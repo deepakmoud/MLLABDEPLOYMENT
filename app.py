@@ -22,7 +22,7 @@ matplotlib.use('Agg')
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-#------------------------------ Saving dataset-------------------------------------------
+#------------------------------ Saving dataset---------------------------------
 # this is the path to save dataset for preprocessing
 pathfordataset = "static/data-preprocess/"
 pathfordatasetNew = "data-preprocess/new"   
@@ -927,7 +927,7 @@ def knn():
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
         df = pd.read_csv(get_dataset)
         df = df.fillna(method='ffill')
-        col_no = df.shape[1]
+        #col_no = df.shape[1]
 
         cols = df.columns
         num_cols = df._get_numeric_data().columns
@@ -986,7 +986,7 @@ def knn():
         return render_template('/supervised/knn/knnoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
                                var2=precision,var3=recall, var4=score,  data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
 
-#-------------------------------Support Vector Machine Classification prediction(Specific dataset)-------------------------------------------
+#-------------------------------KNN Classification prediction(Specific dataset)-------------------------------------------
         
 @app.route('/supervised/knn/knnoutput',  methods=['GET', 'POST'])
 def knnPred():
@@ -1052,7 +1052,7 @@ def knnPred():
 def unsupervised():
     return render_template('/unsupervised/unsupervised.html')
 
-#---------------------k Means Clustering----------------------------------------------   
+#---------------------k Means Clustering----------------------------------------- 
 
 
 
@@ -1592,8 +1592,703 @@ def dbscanPred():
         return render_template('/unsupervised/dbscan/dbscanpredicted.html', dataset_name=my_dataset, ans=predict, model_name='hierarchical clustering', first_col=result)
 
 
-#----------------------------------------------unsupervised learning------------------------------------
+#----------------------------------------------Feature Engineering and Feature selection------------------------------------
 
+
+@app.route('/feature')
+def feature():
+    return render_template('/feature/feature.html')
+
+
+
+#----------------------------------------------PCA---------------------------------------
+
+@app.route('/feature/pca/pca')
+def pca1():
+    return render_template('/feature/pca/pca.html')
+
+
+@app.route('/feature/pca/pca',  methods=['GET', 'POST'])
+def pca():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        data_std = request.form['flexRadioDefault']
+        class_type=request.form['classification']
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/4, random_state=42)
+
+        
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+        # Applying PCA
+        from sklearn.decomposition import PCA
+        pca = PCA(n_components = None)
+        X_train = pca.fit_transform(X_train)
+        X_test = pca.transform(X_test)
+        explained_variance = pca.explained_variance_ratio_
+        var5=explained_variance
+        # Applying PCA
+        from sklearn.decomposition import PCA
+        pca1 = PCA(n_components = 3)
+        X_train = pca1.fit_transform(X_train)
+        X_test = pca1.transform(X_test)
+        explained_variance = pca1.explained_variance_ratio_
+        var6=explained_variance
+       # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_train, y_train)
+        # Predicting the Test set results
+        y_pred = classifier.predict(X_test)
+        # Making the Confusion Matrix
+        
+           
+        
+        
+        Accuracy= accuracy_score(y_test, y_pred)*100
+        print(Accuracy)
+        from sklearn.metrics import precision_score
+        from sklearn.metrics import recall_score
+        from sklearn.metrics import f1_score
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        precision = precision_score(y_test, y_pred, average='macro')
+        recall = recall_score(y_test, y_pred, average='macro')
+        score = f1_score(y_test, y_pred, average='macro')
+        import pickle 
+        print("[INFO] Saving model...")
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(pca1,open("static/data-preprocess/model/model.pkl", 'wb')) 
+    
+        return render_template('/feature/pca/pcaoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
+                               var2=precision,var3=recall, var4=score,var5=var5, var6=var6, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+#-------------------------------Support Vector Machine Classification prediction(Specific dataset)-------------------------------------------
+        
+@app.route('/feature/pca/pcaoutput',  methods=['GET', 'POST'])
+def pcaPred():
+    if request.method == 'POST':
+        num1 = request.form['num1']
+        num2 = request.form['num2']
+        
+        my_dataset = request.form['my_dataset']
+        data_std = request.form['flexRadioDefault']
+       
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        li = list(df.columns)
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/4, random_state=42)
+
+        # Feature Scaling
+        
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+       
+        # Applying PCA
+        from sklearn.decomposition import PCA
+        pca = PCA(n_components = 2)
+        X_train = pca.fit_transform(X_train)
+        X_test = pca.transform(X_test)
+        explained_variance = pca.explained_variance_ratio_
+        var6=explained_variance
+       # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_train, y_train)
+        
+        output = classifier.predict([[num1,num2]])
+        if output==[1]:
+            prediction="Item will be purchased"
+        else:
+            prediction="Item will not be purchased"
+        
+       
+        return render_template('/feature/pca/pcapredicted.html', dataset_name=my_dataset, ans=prediction, model_name='PCA', first_col=num1, second_col=num2, third_col=prediction)
+
+#-------------------------------------------------------------------LDA----
+
+
+
+@app.route('/feature/lda/lda')
+def lda1():
+    return render_template('/feature/lda/lda.html')
+
+
+@app.route('/feature/lda/lda',  methods=['GET', 'POST'])
+def lda():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        data_std = request.form['flexRadioDefault']
+        class_type=request.form['flexRadioDefault1']
+        print(class_type)
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/4, random_state=42)
+
+        
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+        # Applying LDA
+        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+        lda = LDA(n_components =None)
+        X_train = lda.fit_transform(X_train, y_train)
+        X_test = lda.transform(X_test)
+        explained_variance = lda.explained_variance_ratio_
+        var5=explained_variance
+       
+        if class_type == "multiclass":
+            # Applying LDA
+            from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+            lda1 = LDA(n_components = 2)
+            X_train = lda1.fit_transform(X_train, y_train)
+            X_test = lda1.transform(X_test)
+            var6=explained_variance
+       
+       # Applying LDA
+        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+        lda = LDA(n_components = 1)
+        X_train = lda.fit_transform(X_train, y_train)
+        X_test = lda.transform(X_test)
+        var6=explained_variance
+        
+       # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_train, y_train)
+        # Predicting the Test set results
+        y_pred = classifier.predict(X_test)
+        # Making the Confusion Matrix
+        
+           
+        
+        
+        Accuracy= accuracy_score(y_test, y_pred)*100
+        print(Accuracy)
+        from sklearn.metrics import precision_score
+        from sklearn.metrics import recall_score
+        from sklearn.metrics import f1_score
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        precision = precision_score(y_test, y_pred, average='macro')
+        recall = recall_score(y_test, y_pred, average='macro')
+        score = f1_score(y_test, y_pred, average='macro')
+        import pickle 
+        print("[INFO] Saving model...")
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(lda1,open("static/data-preprocess/model/model.pkl", 'wb')) 
+    
+        return render_template('/feature/lda/ldaoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
+                               var2=precision,var3=recall, var4=score,var5=var5, var6=var6, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+#-------------------------------Support Vector Machine Classification prediction(Specific dataset)-------------------------------------------
+        
+@app.route('/feature/lda/ldaoutput',  methods=['GET', 'POST'])
+def ldaPred():
+    if request.method == 'POST':
+        num1 = request.form['num1']
+        num2 = request.form['num2']
+        
+        my_dataset = request.form['my_dataset']
+        data_std = request.form['flexRadioDefault']
+       
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        li = list(df.columns)
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/4, random_state=42)
+
+        # Feature Scaling
+        
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+       
+        # Applying LDA
+        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+        lda = LDA(n_components = 2)
+        X_train = lda.fit_transform(X_train, y_train)
+        X_test = lda.transform(X_test)
+
+       # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_train, y_train)
+        
+        output = classifier.predict([[num1,num2]])
+        if output==[1]:
+            prediction="Item will be purchased"
+        else:
+            prediction="Item will not be purchased"
+        
+       
+        return render_template('/feature/lda/ldapredicted.html', dataset_name=my_dataset, ans=prediction, model_name='LDA', first_col=num1, second_col=num2, third_col=prediction)
+
+
+#-------------------------------------Feature selection----
+
+
+
+@app.route('/feature/filter/filter')
+def filter1():
+    return render_template('/feature/filter/filter.html')
+
+
+@app.route('/feature/filter/filter',  methods=['GET', 'POST'])
+def filter2():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        data_std = request.form['flexRadioDefault']
+        class_type=request.form['flexRadioDefault1']
+        selection_method=request.form['flexRadio']
+        
+        print(class_type)
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(df.drop(cols[-1], axis=1), 
+                                                  df[cols[-1]], test_size=0.3, 
+                                                 random_state=0)
+
+        
+        
+        # Applying feature selection
+        # import and create the VarianceThreshold object.
+        from sklearn.feature_selection import VarianceThreshold
+        vs_constant = VarianceThreshold(threshold=0)
+
+        # select the numerical columns only.
+        numerical_x_train = X_train[X_train.select_dtypes([np.number]).columns]
+
+        # fit the object to our data.
+        vs_constant.fit(numerical_x_train)
+
+        # get the constant colum names.
+        constant_columns = [column for column in numerical_x_train.columns
+                    if column not in numerical_x_train.columns[vs_constant.get_support()]]
+
+        # detect constant categorical variables.
+        constant_cat_columns = [column for column in X_train.columns 
+                        if (X_train[column].dtype == "O" and len(X_train[column].unique())  == 1 )]
+
+        # conctenating the two lists.
+        all_constant_columns = constant_cat_columns + constant_columns
+        var5=all_constant_columns
+        # drop the constant columns
+        X_train.drop(labels=all_constant_columns, axis=1, inplace=True)
+        X_test.drop(labels=all_constant_columns, axis=1, inplace=True)
+        threshold = 0.80
+
+        # create empty list
+        quasi_constant_feature = []
+
+            # loop over all the columns
+        for feature in X_train.columns:
+
+            # calculate the ratio.
+            predominant = (X_train[feature].value_counts() / np.float(len(X_train))).sort_values(ascending=False).values[0]
+    
+            # append the column name if it is bigger than the threshold
+            if predominant >= threshold:
+                quasi_constant_feature.append(feature)   
+        
+        var6= quasi_constant_feature
+        # drop the quasi constant columns
+        X_train.drop(labels=quasi_constant_feature, axis=1, inplace=True)
+        X_test.drop(labels=quasi_constant_feature, axis=1, inplace=True)
+        
+        # transpose the feature matrice
+        train_features_T = X_train.T
+
+        # print the number of duplicated features
+        
+
+        # select the duplicated features columns names
+        duplicated_columns = train_features_T[train_features_T.duplicated()].index.values
+        var2=duplicated_columns
+        # drop those columns
+        X_train.drop(labels=duplicated_columns, axis=1, inplace=True)
+        X_test.drop(labels=duplicated_columns, axis=1, inplace=True)
+        
+        # creating set to hold the correlated features
+        corr_features = set()
+
+        # create the correlation matrix (default to pearson)
+        corr_matrix = X_train.corr()
+
+        
+
+        for i in range(len(corr_matrix .columns)):
+            for j in range(i):
+                if abs(corr_matrix.iloc[i, j]) > 0.5:
+                    colname = corr_matrix.columns[i]
+                    corr_features.add(colname)
+
+        var3=corr_features
+        print(var3)            
+        X_train.drop(labels=corr_features, axis=1, inplace=True)
+        X_test.drop(labels=corr_features, axis=1, inplace=True)
+        if selection_method == "pearson":
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import f_regression
+            
+            
+            # define feature selection
+            fs = SelectKBest(score_func=f_regression, k=4)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+           
+            var4= X_selected[1].shape
+            print(var4)
+        elif selection_method == "annova":
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import f_classif
+            # define feature selection
+            fs = SelectKBest(score_func=f_classif, k=4)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+            var4= X_selected[1].shape
+        else :
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import mutual_info_classif
+            # define feature selection
+            fs = SelectKBest(score_func=mutual_info_classif, k=4)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+           
+            var4= X_selected[1].shape
+            
+       
+        
+        # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_selected, y_train)
+        # Predicting the Test set results
+        y_pred = classifier.predict(X_test)
+        Accuracy= accuracy_score(y_test, y_pred)*100
+        #print(Accuracy)
+        from sklearn.metrics import precision_score
+        from sklearn.metrics import recall_score
+        from sklearn.metrics import f1_score
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        precision = precision_score(y_test, y_pred, average='macro')
+        recall = recall_score(y_test, y_pred, average='macro')
+        score = f1_score(y_test, y_pred, average='macro')
+        import pickle 
+        print("[INFO] Saving model...")
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(classifier,open("static/data-preprocess/model/model.pkl", 'wb')) 
+    
+        return render_template('/feature/filter/filteroutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
+                               var2=var2,var3=var3, var4=var4,var5=var5, var6=var6, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+#------------------------------- Classification after feature selection prediction(Specific dataset)-------------------------------------------
+        
+@app.route('/feature/filter/filteroutput',  methods=['GET', 'POST'])
+def filterPred():
+    if request.method == 'POST':
+        num1 = request.form['num1']
+        num2 = request.form['num2']
+        
+        my_dataset = request.form['my_dataset']
+        data_std = request.form['flexRadioDefault']
+        selection_method=request.form['flexRadio']
+       
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        li = list(df.columns)
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        X_train, X_test, y_train, y_test = train_test_split(df.drop(cols[-1], axis=1), 
+                                                  df[cols[-1]], test_size=0.3, 
+                                                 random_state=0)
+
+        
+        
+        # Applying feature selection
+        # import and create the VarianceThreshold object.
+        from sklearn.feature_selection import VarianceThreshold
+        vs_constant = VarianceThreshold(threshold=0)
+
+        # select the numerical columns only.
+        numerical_x_train = X_train[X_train.select_dtypes([np.number]).columns]
+
+        # fit the object to our data.
+        vs_constant.fit(numerical_x_train)
+
+        # get the constant colum names.
+        constant_columns = [column for column in numerical_x_train.columns
+                    if column not in numerical_x_train.columns[vs_constant.get_support()]]
+
+        # detect constant categorical variables.
+        constant_cat_columns = [column for column in X_train.columns 
+                        if (X_train[column].dtype == "O" and len(X_train[column].unique())  == 1 )]
+
+        # conctenating the two lists.
+        all_constant_columns = constant_cat_columns + constant_columns
+        var5=all_constant_columns
+        # drop the constant columns
+        X_train.drop(labels=all_constant_columns, axis=1, inplace=True)
+        X_test.drop(labels=all_constant_columns, axis=1, inplace=True)
+        threshold = 0.80
+
+        # create empty list
+        quasi_constant_feature = []
+
+            # loop over all the columns
+        for feature in X_train.columns:
+
+            # calculate the ratio.
+            predominant = (X_train[feature].value_counts() / np.float(len(X_train))).sort_values(ascending=False).values[0]
+    
+            # append the column name if it is bigger than the threshold
+            if predominant >= threshold:
+                quasi_constant_feature.append(feature)   
+        
+        var6= quasi_constant_feature
+        # drop the quasi constant columns
+        X_train.drop(labels=quasi_constant_feature, axis=1, inplace=True)
+        X_test.drop(labels=quasi_constant_feature, axis=1, inplace=True)
+        
+        # transpose the feature matrice
+        train_features_T = X_train.T
+
+        # print the number of duplicated features
+        
+
+        # select the duplicated features columns names
+        duplicated_columns = train_features_T[train_features_T.duplicated()].index.values
+        var2=duplicated_columns
+        # drop those columns
+        X_train.drop(labels=duplicated_columns, axis=1, inplace=True)
+        X_test.drop(labels=duplicated_columns, axis=1, inplace=True)
+        
+        # creating set to hold the correlated features
+        corr_features = set()
+
+        # create the correlation matrix (default to pearson)
+        corr_matrix = X_train.corr()
+
+        
+
+        for i in range(len(corr_matrix .columns)):
+            for j in range(i):
+                if abs(corr_matrix.iloc[i, j]) > 0.5:
+                    colname = corr_matrix.columns[i]
+                    corr_features.add(colname)
+
+        var3=corr_features
+        print(var3)            
+        X_train.drop(labels=corr_features, axis=1, inplace=True)
+        X_test.drop(labels=corr_features, axis=1, inplace=True)
+        if selection_method == "pearson":
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import f_regression
+            
+            
+            # define feature selection
+            fs = SelectKBest(score_func=f_regression, k=2)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+           
+            var4= X_selected[1].shape
+            
+        elif selection_method == "annova":
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import f_classif
+            # define feature selection
+            fs = SelectKBest(score_func=f_classif, k=2)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+            var4= X_selected[1].shape
+        else :
+            # pearson's correlation feature selection for numeric input and numeric output
+            from sklearn.datasets import make_regression
+            from sklearn.feature_selection import SelectKBest
+            from sklearn.feature_selection import mutual_info_classif
+            # define feature selection
+            fs = SelectKBest(score_func=mutual_info_classif, k=2)
+            # apply feature selection
+            X_selected = fs.fit_transform(X_train, y_train)
+            X_test= fs.transform(X_test)
+           
+            var4= X_selected[1].shape
+            
+       
+        
+        # Fitting SVM to the Training set
+        from sklearn.svm import SVC
+        classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        classifier.fit(X_selected, y_train)
+        # Predicting the Test set results
+        y_pred = classifier.predict(X_test)
+        output = classifier.predict([[num1,num2]])
+        if output==[1]:
+            prediction="Item will be purchased"
+        else:
+            prediction="Item will not be purchased"
+        
+       
+        return render_template('/feature/filter/filterpredicted.html', dataset_name=my_dataset, ans=prediction, model_name='Classification based on Feature selection', first_col=num1, second_col=num2, third_col=prediction)
+
+
+#---------------Application----------------
 if __name__ == '__main__':
     app.run(debug=True)
     
