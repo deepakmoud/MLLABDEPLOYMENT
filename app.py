@@ -1921,7 +1921,7 @@ def ldaPred():
         return render_template('/feature/lda/ldapredicted.html', dataset_name=my_dataset, ans=prediction, model_name='LDA', first_col=num1, second_col=num2, third_col=prediction)
 
 
-#-------------------------------------Feature selection----
+#-------------------------------------Feature selection Filter Based Method----
 
 
 
@@ -2288,6 +2288,435 @@ def filterPred():
         return render_template('/feature/filter/filterpredicted.html', dataset_name=my_dataset, ans=prediction, model_name='Classification based on Feature selection', first_col=num1, second_col=num2, third_col=prediction)
 
 
+
+#-----------------Feature selection Wrapper method-----------------------------------
+
+@app.route('/feature/wrapper/wrapper')
+def wrapper1():
+    return render_template('/feature/wrapper/wrapper.html')
+
+
+@app.route('/feature/wrapper/wrapper',  methods=['GET', 'POST'])
+def wrapper2():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        data_std = request.form['flexRadioDefault']
+        class_type=request.form['flexRadioDefault1']
+        selection_method=request.form['flexRadio']
+        
+        
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        df = pd.read_csv(get_dataset)
+        df = df.fillna(method='ffill')
+        col_no = df.shape[1]
+
+        cols = df.columns
+        num_cols = df._get_numeric_data().columns
+        cat_col=list(set(cols) - set(num_cols)) 
+
+
+        temp = 0
+        labelencoder = LabelEncoder()
+        # taking care of cataagorical data
+        for i in df.columns:
+            for x in cat_col:
+                if x==i:
+                    df.iloc[:, temp] = labelencoder.fit_transform(df.iloc[:, temp])
+            temp = temp + 1
+        #df = df.fillna(method='ffill')
+        #li = list(df.columns)
+        X = df.iloc[:, :-1].values
+        y = df.iloc[:, -1].values
+        # Splitting the dataset into the Training set and Test set
+        from sklearn.model_selection import train_test_split
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 5)
+        from mlxtend.feature_selection import SequentialFeatureSelector
+
+        # import the algorithm you want to evaluate on your features.
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.datasets import make_regression
+        
+        
+        if selection_method == "forward":
+            # create the SequentialFeatureSelector object, and configure the parameters.
+            sfs = SequentialFeatureSelector(RandomForestClassifier(), 
+                                            k_features=5, 
+                                            forward=True, 
+                                            floating=False,
+                                            scoring='accuracy',
+                                            cv=2)
+
+            # fit the object to the training data.
+            sfs = sfs.fit(X_train, y_train)
+
+            # print the selected features.
+            selected_features = X_train[list(sfs.k_feature_idx_)]
+            var5= sfs.k_feature_names_
+
+            # print the final prediction score.
+            var6= sfs.k_score_
+
+            # transform to the newly selected features.
+            x_train_sfs = sfs.transform(X_train)
+            import pickle 
+            # Save the trained model as a pickle string. 
+            saved_model=pickle.dump(sfs,open("static/data-preprocess/model/model.pkl", 'wb'))
+
+        elif selection_method == "backward":
+            # create the SequentialFeatureSelector object, and configure the parameters.
+            sfs = SequentialFeatureSelector(RandomForestClassifier(), 
+                                            k_features=5, 
+                                            forward=False, 
+                                            floating=False,
+                                            scoring='accuracy',
+                                            cv=2)
+
+            # fit the object to the training data.
+            sfs = sfs.fit(X_train, y_train)
+
+            # print the selected features.
+            selected_features = X_train[list(sfs.k_feature_idx_)]
+            var5= sfs.k_feature_names_
+
+            # print the final prediction score.
+            var6= sfs.k_score_
+
+            # transform to the newly selected features.
+            X_train_sfs = sfs.transform(X_train)
+            import pickle 
+            # Save the trained model as a pickle string. 
+            saved_model=pickle.dump(sfs,open("static/data-preprocess/model/model.pkl", 'wb'))
+            
+        else :
+            from mlxtend.feature_selection import ExhaustiveFeatureSelector
+           
+            # import the algorithm you want to evaluate on your features.
+            from sklearn.ensemble import RandomForestClassifier
+
+            # create the ExhaustiveFeatureSelector object.
+            efs = ExhaustiveFeatureSelector(RandomForestClassifier(), 
+                                            min_features=2,
+                                            max_features=6, 
+                                            scoring='roc_auc',
+                                            cv=2)
+
+            # fit the object to the training data.
+            efs = efs.fit(X_train, y_train)
+
+            # print the selected features.
+            selected_features = X_train[list(efs.best_idx_ )]
+            var5 = selected_features
+
+            # print the final prediction score.
+            var6= efs.best_score_
+
+            # transform our data to the newly selected features.
+            x_train_sfs = efs.transform(X_train)
+            x_test_sfs = efs.transform(X_test)
+            import pickle 
+            # Save the trained model as a pickle string. 
+            saved_model=pickle.dump(efs,open("static/data-preprocess/model/model.pkl", 'wb'))
+           
+        
+        # Fitting SVM to the Training set
+        #from sklearn.svm import SVC
+        #classifier = SVC(kernel = 'sigmoid', random_state = 0,probability=True)
+        #classifier.fit(x_train_sfs, y_train)
+        # Predicting the Test set results
+        #y_pred = classifier.predict(x_train_sfs)
+        #Accuracy= accuracy_score(y_train, y_pred)*100
+        #print(Accuracy)
+        #from sklearn.metrics import precision_score
+        #from sklearn.metrics import recall_score
+        #from sklearn.metrics import f1_score
+        #if class_type == "binary":
+           # precision = precision_score(y_test, y_pred, average='binary')
+           # recall = recall_score(y_test, y_pred, average='binary')
+            #score = f1_score(y_test, y_pred, average='binary')
+        #precision = precision_score(y_test, y_pred, average='macro')
+        #recall = recall_score(y_test, y_pred, average='macro')
+        #score = f1_score(y_test, y_pred, average='macro')
+       # ) 
+    
+        return render_template('/feature/wrapper/wrapperoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,
+                               var5=var5, var6=var6, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+
+
+#-----------------Aprori Algorithm-----------------------------------
+
+@app.route('/unsupervised/apriori/apriori')
+def apriori1():
+    return render_template('/unsupervised/apriori/apriori.html')
+
+
+@app.route('/unsupervised/apriori/apriori',  methods=['GET', 'POST'])
+def apriori2():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        minimum_support= float(request.form['support'])
+        minimum_confidence=float(request.form['confidence'])
+        
+        
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        # Importing the libraries
+        import pandas as pd
+        import numpy as np
+        from mlxtend.frequent_patterns import apriori, association_rules
+        import matplotlib.pyplot as plt
+        dataset = pd.read_csv(get_dataset, nrows=1000)
+        #Count total number of classes in Data
+        items = (dataset['0'].unique())
+        var1=items
+        #Create list 
+        transactions = []
+        
+        for i in range(0, dataset.shape[0]):
+            transactions.append([str(dataset.values[i,j]) for j in range(0, dataset.shape[1])])
+        
+        
+        import pandas as pd
+        from mlxtend.preprocessing import TransactionEncoder
+        te = TransactionEncoder()
+        te_ary = te.fit(transactions).transform(transactions)
+        df = pd.DataFrame(te_ary, columns=te.columns_)
+        df=df.drop(['nan'], axis = 1)
+        freq_items = apriori(df, min_support=minimum_support, use_colnames=True)
+        var2=freq_items
+        rules = association_rules(freq_items, metric="confidence", min_threshold=minimum_confidence)
+        var3=rules
+        import pickle 
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(freq_items,open("static/data-preprocess/model/model.pkl", 'wb'))
+           
+        
+      
+    
+        return render_template('/unsupervised/apriori/apriorioutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,
+                               var1=var1, var2=var2.to_html( classes='table table-striped table-dark table-hover x'),var3=var3.to_html( classes='table table-striped table-dark table-hover x'), data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+
+
+#-----------------FP Growth Algorithm-----------------------------------
+
+@app.route('/unsupervised/fp/fp')
+def fp1():
+    return render_template('/unsupervised/fp/fp.html')
+
+
+@app.route('/unsupervised/fp/fp',  methods=['GET', 'POST'])
+def fp():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        minimum_support= float(request.form['support'])
+        minimum_confidence=float(request.form['confidence'])
+        
+        
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        # Importing the libraries
+        import pandas as pd
+        import numpy as np
+        from mlxtend.frequent_patterns import apriori, association_rules
+        from mlxtend.frequent_patterns import fpgrowth
+        import matplotlib.pyplot as plt
+        dataset = pd.read_csv(get_dataset,nrows=1000)
+        #Count total number of classes in Data
+        items = (dataset['0'].unique())
+        var1=items
+        #Create list 
+        transactions = []
+        
+        for i in range(0, dataset.shape[0]):
+            transactions.append([str(dataset.values[i,j]) for j in range(0, dataset.shape[1])])
+        
+        
+        import pandas as pd
+        from mlxtend.preprocessing import TransactionEncoder
+        te = TransactionEncoder()
+        te_ary = te.fit(transactions).transform(transactions)
+        df = pd.DataFrame(te_ary, columns=te.columns_)
+        df=df.drop(['nan'], axis = 1)
+        freq_items = fpgrowth(df, min_support=minimum_support, use_colnames=True)
+        var2=freq_items
+        rules = association_rules(freq_items, metric="confidence", min_threshold=minimum_confidence)
+        var3=rules
+        import pickle 
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(freq_items,open("static/data-preprocess/model/model.pkl", 'wb'))
+           
+        
+      
+    
+        return render_template('/unsupervised/fp/fpoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,
+                               var1=var1, var2=var2.to_html( classes='table table-striped table-dark table-hover x'),var3=var3.to_html( classes='table table-striped table-dark table-hover x'), data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+
+
+
+#-----------------Natural language processing-----------------------------------
+
+@app.route('/nlp')
+def nlp():
+    return render_template('/nlp/nlp.html')
+
+
+#----------------------Sentiment Analysis------------------------------
+
+
+@app.route('/nlp/sentiment/sentiment')
+def sentiment1():
+    return render_template('/nlp/sentiment/sentiment.html')
+
+
+@app.route('/nlp/sentiment/sentiment',  methods=['GET', 'POST'])
+def sentiment():
+    if request.method == 'POST':
+        my_dataset = request.files['my_dataset']
+        my_model_name = request.form['name_of_model1']
+        
+        class_type=request.form['classification']
+        dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        my_dataset.save(dataset_path)
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        
+        df = pd.read_csv(get_dataset, delimiter="\t", quoting=3)
+        # Cleaning the texts for all review using for loop
+        import re
+        import nltk
+        nltk.download('stopwords')
+        from nltk.corpus import stopwords
+        from nltk.stem.porter import PorterStemmer
+        corpus = []
+        for i in range(0, df.shape[0]):
+            review = re.sub('[^a-zA-Z]', ' ', df['Review'][i])
+            review = review.lower()
+            review = review.split()
+            ps = PorterStemmer()
+            review = [ps.stem(word) for word in review if not word in set(stopwords.words('english'))]
+            review = ' '.join(review)
+    
+            corpus.append(review)#df = df.fillna(method='ffill')
+        # Creating the Bag of Words model
+        from sklearn.feature_extraction.text import CountVectorizer
+        cv = CountVectorizer(max_features = 1500)
+
+        X = cv.fit_transform(corpus).toarray()
+        y = df.iloc[:, 1].values
+        # Splitting the dataset into the Training set and Test set
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)#col_no = df.shape[1]
+
+        
+
+        
+        
+        # Fitting Naive Bayes to the Training set
+        from sklearn.naive_bayes import GaussianNB
+        classifier = GaussianNB()
+        classifier.fit(X_train, y_train)
+        # Predicting the Test set results
+        y_pred = classifier.predict(X_test)
+        
+           
+        
+        
+        Accuracy= accuracy_score(y_test, y_pred)*100
+        print(Accuracy)
+        from sklearn.metrics import precision_score
+        from sklearn.metrics import recall_score
+        from sklearn.metrics import f1_score
+        if class_type == "multiclass":
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
+        precision = precision_score(y_test, y_pred, average='binary')
+        recall = recall_score(y_test, y_pred, average='binary')
+        score = f1_score(y_test, y_pred, average='binary')
+        import pickle 
+        print("[INFO] Saving model...")
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(classifier,open("static/data-preprocess/model/model.pkl", 'wb')) 
+    
+        return render_template('/nlp/sentiment/sentimentoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
+                               var2=precision,var3=recall, var4=score,  data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
+
+#-------------------------------Sentiment Analysis prediction(Specific dataset)-------------------------------------------
+        
+@app.route('/nlp/sentiment/sentimentoutput',  methods=['GET', 'POST'])
+def sentimentPred():
+    if request.method == 'POST':
+        review_input = request.form['review']
+       
+        
+        my_dataset = request.form['my_dataset']
+        
+       
+        get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset))
+        df = pd.read_csv(get_dataset, delimiter="\t", quoting=3)
+        # Cleaning the texts for all review using for loop
+        
+        import nltk
+        nltk.download('stopwords')
+        from nltk.corpus import stopwords
+        from nltk.stem.porter import PorterStemmer
+        corpus = []
+        for i in range(0, df.shape[0]):
+            review = re.sub('[^a-zA-Z]', ' ', df['Review'][i])
+            review = review.lower()
+            review = review.split()
+            ps = PorterStemmer()
+            review = [ps.stem(word) for word in review if not word in set(stopwords.words('english'))]
+            review = ' '.join(review)
+    
+            corpus.append(review)#df = df.fillna(method='ffill')
+        # Creating the Bag of Words model
+        from sklearn.feature_extraction.text import CountVectorizer
+        cv = CountVectorizer(max_features = 1500)
+
+        X = cv.fit_transform(corpus).toarray()
+        y = df.iloc[:, 1].values
+        # Splitting the dataset into the Training set and Test set
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)#col_no = df.shape[1]
+
+        
+
+        
+        
+        # Fitting Naive Bayes to the Training set
+        from sklearn.naive_bayes import GaussianNB
+        classifier = GaussianNB()
+        classifier.fit(X_train, y_train)
+        
+        #output = classifier.predict([[review]])
+        input_data = [review_input ] 
+  
+        input_data = cv.transform(input_data).toarray()
+
+
+        input_pred = classifier.predict(input_data)
+
+        input_pred = input_pred.astype(int)
+
+
+        if input_pred[0]==1:
+            prediction=" Positive"
+        else:
+            prediction=" Negative"
+        
+        
+       
+        return render_template('/nlp/sentiment/sentimentpredicted.html', dataset_name=my_dataset, ans=prediction, model_name='Sentiment Analysis', first_col=review_input, second_col=prediction)
 #---------------Application----------------
 if __name__ == '__main__':
     app.run(debug=True)
