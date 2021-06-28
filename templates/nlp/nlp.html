@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+    <title>Machine Learning Lab</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
+        <a class="  navbar-brand" href="#" style="margin-left: 25px;">
+        <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+            <ul class="nav navbar-nav navbar-right">
+           <li><a href="/">HOME</a></li>
+           </ul>
+        </a>
+    </nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">
+    
+                <img src="{{ url_for('static',filename = 'image/nlp1.gif')  }}" class="img-fluid"
+                    style="width: auto; height: auto;  max-width: 550px;max-height: 600px;">
+                    
+            </div>
+    
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
+                <h2>Natural Language Processing(NLP)</h2>
+                <h4 style="color: sandybrown;text-allign='justify'">NLP combines computational linguistics—rule-based modeling of human language—with statistical, machine learning, and deep learning models. Together, these technologies enable computers to process human language in the form of text or voice data and to ‘understand’ its full meaning, complete with the speaker or writer’s intent and sentiment.
+
+NLP drives computer programs that translate text from one language to another, respond to spoken commands, and summarize large volumes of text rapidly—even in real time
+</h4>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        
+                        <ul>
+                            <li>Sentiment Analysis</li>
+                            <li>Langauage Translation</li>
+                            
+                    </div>
+                    
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+    
+            <h1>Natural Language Processing Techniques</h1>
+            <br><br>
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/sentiment.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Sentiment Analysis </h5>
+                        <p class="card-text"> Sentiment Analysis is the most common text classification tool that analyses an incoming message and tells whether the underlying sentiment is positive, negative our neutral. </p>
+                        <a href="/nlp/sentiment/sentiment"><button type="button"
+                                class="btn btn-outline-primary">Find  sentiemnt of Comment &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col-xs-12 col-md-4" style="padding-top: 30px;">
+                <div class="card zoom">
+                    <center> <img src="{{ url_for('static',filename = 'image/language.gif')  }}" style="height: 275px;"
+                            class="card-img-top" alt="not found"></center>
+                    <div class="card-body">
+                        <h5 class="card-title">Language Translation</h5>
+                        <p class="card-text"> Machine Translation or MT or robotized interpretation is simply a procedure when a computer software translates text from one language to another without human contribution.
+                        </p>
+                        <a href="/nlp/language/language"><button type="button"
+                                class="btn btn-outline-primary">Translate Language &#x270C;</button></a>
+                    </div>
+                </div>
+    
+            </div>
+    
+    
+    
+        </div>
+    </div>
+
+
+
+
+
+<!-- footer -->
+<br><br>
+<div class="fixed-bottom ">
+    <div class="bg-secondary " style="min-height: 40px;">
+
+        <marquee style="color:#fff; margin-top: 7px;">
+            <h9>Developed by Deepak Moud</h9>
+        </marquee>
+    </div>
+</div>
+<!-- change later-->
+<script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>

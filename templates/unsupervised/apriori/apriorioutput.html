@@ -23,7 +23,7 @@
           
             
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/feature" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    <label> <a href="/unsupervised" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
                 </div>
            
         </a>
@@ -33,8 +33,8 @@
         <div class="output">
             <br><br>
             <center>
-                <h1> Wrapper and Embedded Feature selection </h1>
-                <h1>&#127881;&#127882; Hurrey Features have been selected  Successfully &#127882;&#127881;</h1>
+                <h1> Association Rule Mining Using apriori Algorithm </h1>
+                <h2>&#127881;&#127882; Hurrey Frequent Item sets and association rules have been identified  Successfully &#127882;&#127881;</h2>
             </center>
             <br><br>
             <h4><span class="outputtext">🏹 Dataset Name : </span> {{dataset_name}}</h4>
@@ -64,16 +64,26 @@
             <br>
             <h4><span class="outputtext">🏹 Dataset Shape : {{data_shape}} </span> </h4>
             <br>
-            <h4><span class="outputtext">🏹 Best features Indexes</span> <span style="color:rgb(141, 148, 245);;">
-                    {{var5}} </span></h4>
+            <h4><span class="outputtext">🏹Unique Items</span> <span style="color:rgb(141, 148, 245);;">
+                    {{var1}} </span></h4>
             <br>
-            <h4><span class="outputtext">🏹 Best Model Score </span> <span style="color:rgb(141, 148, 245);;">
-                    {{var6}} </span></h4>
-            
+          
+            <br>
+           <h4><span class="outputtext">🏹 Frequent items: </span> </h4>
+            <br>
+            {{var2 | safe}}
+
+            <br>
            
+           <br>
+           <h4><span class="outputtext">🏹 Association rules </span> </h4>
+            <br>
+            {{var3 | safe}}
+
+            <br>
            
             <h4><span class="outputtext">You can Download Model here: 
-                <a href="{{url_for('download_model')}}"> <button type="button" class="btn btn-outline-primary">Download Feature selector &#9655;</button></a>
+                <a href="{{url_for('download_model')}}"> <button type="button" class="btn btn-outline-primary">Download Apriori Model &#9655;</button></a>
             </span>
             </h4>
             
