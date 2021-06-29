@@ -111,9 +111,9 @@ def download_model():
     return send_file(path1,as_attachment=True)
 
 #------------------------------About us-------------------------------------------
-@app.route('/aboutus')
-def aboutus():
-    return render_template('aboutus.html')
+@app.route('/aboutusnew')
+def aboutusnew():
+    return render_template('aboutusnew.html')
 #------------------------------Supervised machine Learning-------------------------------------------
 # for suprvised learning
 
