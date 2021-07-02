@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body style="background-color:  #c5e6a6;">
     <nav class="navbar navbar-dark bg-secondary">
         <a class="navbar-brand" href="#" style="margin-left: 25px;">
             <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
@@ -23,7 +23,7 @@
           
             
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/supervised" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    <a href="/supervised" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -114,13 +114,13 @@
                 <h4 style="color: black;">Have you applied Standarization on features ?</h4>
                 <div class="form-check">
                     <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1" style="color:black;">
+                    <label class="form-check-label" for="flexRadioDefault1" style="color:green;">
                         Yes 
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2" style="color: black;">
+                    <label class="form-check-label" for="flexRadioDefault2" style="color: red;">
                         No  
                     </label>
                 </div>

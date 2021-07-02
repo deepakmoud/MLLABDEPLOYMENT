@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<body style="background-color: #00ffff;">
     <nav class="navbar navbar-dark bg-secondary">
         <a class="navbar-brand" href="#" style="margin-left: 25px;">
             <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
@@ -23,7 +24,9 @@
           
             
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/supervised" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    
+                    
+               <a href="/supervised" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -83,14 +86,13 @@
                 <img class="img-fluid" src="/static/{{visualize}}" alt="not found">
 
             </div>
+            <br>
+            <h4><span class="outputtext">You can Download Model here: 
+                <a href="{{url_for('download_model')}}"> <button type="button" class="btn btn-outline-primary">Download Model &#9655;</button></a>
+            </span>
+            </h4>
+            
             <br><br>
-
-
-
-
-
-
-
 
             <form method="POST" action="/supervised/regression/outputSimLR" enctype="multipart/form-data">
                 <h4>You wanna predict : </h4>
@@ -101,26 +103,13 @@
                     <input type="text" name="my_dataset" class="form-control">
                 </div><br>
                 <div class="input-group">
-                    <span class="input-group-text">Enter {{first_col}}</span>
-                    <input type="number"  name="num1" class="form-control">          
+                    <span class="input-group-text">Enter Experiance in years</span>
+                    <input type="number"  name="num1" class="form-control" Step=any>          
                 </div><br>
                 <button onclick="$('#loading').show();" type="submit" class="btn btn-outline-primary">Predict {{sec_col}} &#8987;
                 </button>
                 <br>
             </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
     </div>

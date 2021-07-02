@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #aaf661;">
     <nav class="navbar navbar-dark bg-secondary">
         <a class="navbar-brand" href="#" style="margin-left: 25px;">
             <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
@@ -23,7 +23,7 @@
           
             
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/nlp" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    <a href="/nlp" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -97,8 +97,8 @@
 
             <form method="POST" action="/nlp/sentiment/sentimentoutput" enctype="multipart/form-data">
                
-                <h4>Prediction only for Features Age and Salary Choose appropriate dateset that contain onle two features Age and salary.  </h4>
-               <h4><h4>Model will Predict whether the item will be purchased or not </h4> </h4>
+                <h4>Please upload datset for sentiment analysis. dataset must contain Dataset  Must have two colunms 1. Comment/Review(Feature) and second column must be target like Liked/class/sentiment(0/1) </h4>
+               <h4><h4>Model will find out sentiment of given Comment </h4> </h4>
                 <div class="input-group">
                     <span class="input-group-text">Enter Your dataset name</span>
                     <input type="text" name="my_dataset" class="form-control">

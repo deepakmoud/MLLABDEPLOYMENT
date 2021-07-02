@@ -14,7 +14,7 @@
     <title>ML Trainer</title>
 </head>
 
-<body>
+<body style="background-color:  #5fbc9a;">
     <!-- navbar -->
     <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
         <a class="  navbar-brand" href="#" style="margin-left: 25px;">
@@ -22,7 +22,7 @@
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/feature" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    <a href="/feature" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -40,14 +40,14 @@
     
             <form method="POST" action="/feature/wrapper/wrapper" enctype="multipart/form-data">
                 <h4 style="color: #fff;">Upload dataset:</h4>
-                <p style="color: beige;">( please upload  dataset to identify LDA. )</p>
+                <p style="color: beige;">( please upload  dataset to identify features using Wrapper based Method. )</p>
                 <div class="input-group">
                     
                     <input type="file" class="form-control" name="my_dataset" placeholder="hi" accept=".csv,.xlsx">
     
                 </div>
                 <div style="margin-top: 10px; margin-left: 20px; color: white;">
-                    <label> Data Must have Features and Class label. All columns except last column will be considered Features and last column will be considered Target</label>
+                    <label style="color: red;"> Data Must have Features and Class label. All columns except last column will be considered Features and last column will be considered Target</label>
                 </div>
                 
                 <br>

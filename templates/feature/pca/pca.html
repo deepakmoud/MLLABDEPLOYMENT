@@ -14,7 +14,7 @@
     <title>ML Trainer</title>
 </head>
 
-<body>
+<body style="background-color:  #ffdd00;">
     <!-- navbar -->
     <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
         <a class="  navbar-brand" href="#" style="margin-left: 25px;">
@@ -22,7 +22,8 @@
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/feature" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                   
+                    <a href="/feature" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -47,7 +48,7 @@
     
                 </div>
                 <div style="margin-top: 10px; margin-left: 20px; color: white;">
-                    <label> Data Must have Features and Class label. All columns except last column will be considered Features and last column will be considered Target</label>
+                    <label style="color: red;"> Data Must have Features and Class label. All columns except last column will be considered Features and last column will be considered Target</label>
                 </div>
                 
                 <br>
@@ -56,10 +57,15 @@
                     <input type="text" value="PCA" name="name_of_model1" class="form-control">
                 </div>
                 <br>
+                <div class="input-group">
+                    <span class="input-group-text">Enter Number of Principal components</span>
+                    <input type="number"  name="ncomponents" class="form-control">
+                </div>
+                <br>
                 <h4 style="color: white;">Type of Classification</h4>
                 <div class="form-check">
                     <input class="form-check-input" value="binary" type="radio" name="classification" id="class1" checked>
-                    <label class="form-check-label" for="binary" style="color: whitesmoke;">
+                    <label class="form-check-label" for="binary" style="color: black;">
                         Binary 
                     </label>
                 </div>
@@ -75,13 +81,13 @@
                 <h4 style="color: white;">Do you like to do Data Standerization ?</h4>
                 <div class="form-check">
                     <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1" style="color: whitesmoke;">
+                    <label class="form-check-label" for="flexRadioDefault1" style="color: green;">
                         Yes 
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2" style="color: whitesmoke;">
+                    <label class="form-check-label" for="flexRadioDefault2" style="color: red;">
                         No  
                     </label>
                 </div>

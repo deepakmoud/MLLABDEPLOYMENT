@@ -14,7 +14,7 @@
     <title>ML Trainer</title>
 </head>
 
-<body>
+<body style="background-color:  #f0dbb7;">
     <!-- navbar -->
     <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
         <a class="  navbar-brand" href="#" style="margin-left: 25px;">
@@ -22,7 +22,7 @@
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/unsupervised" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                    <a href="/unsupervised" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -40,35 +40,38 @@
     
             <form method="POST" action="/unsupervised/hierarchical/hierarchical" enctype="multipart/form-data">
                 <h4 style="color: #fff;">Upload your preprocessed dataset here:</h4>
-                <p style="color: beige;">( please do dataset for classification. )</p>
+                <p style="color: beige;">( please provide dataset for Clustering. )</p>
                 <div class="input-group">
                     
                     <input type="file" class="form-control" name="my_dataset" placeholder="hi" accept=".csv,.xlsx">
     
                 </div>
                 <div style="margin-top: 10px; margin-left: 20px; color: white;">
-                    <label> All the Colums will be considered Features. Upload only data with features. Remove columns which are not features</label>
+                    <label style="color: whitesmoke;"> All the Colums will be considered Features. Upload only data with features. Remove columns which are not features</label>
                 </div>
                 
+                <br>
+                <div class="input-group">
+                    <span class="input-group-text">Enter Number of Clusters</span>
+                    <input type="number"  name="ncluster" class="form-control">
+                </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-text">Model Name</span>
                     <input type="text" value="Hierarchical Clustering " name="name_of_model1" class="form-control">
                 </div>
-                <br>
-                
                 
                 <br>
                 <h4 style="color: white;">Do you like to do Data Standerization ?</h4>
                 <div class="form-check">
-                    <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1" style="color: whitesmoke;">
+                    <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1" style="color: green;">
                         Yes 
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2" style="color: whitesmoke;">
+                    <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+                    <label class="form-check-label" for="flexRadioDefault2" style="color: red;">
                         No  
                     </label>
                 </div>

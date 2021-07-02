@@ -15,6 +15,7 @@
 </head>
 
 <body>
+<body style="background-color:  #fff9e6;">
     <!-- navbar -->
     <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
         <a class="  navbar-brand" href="#" style="margin-left: 25px;">
@@ -22,7 +23,8 @@
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           
            <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <label> <a href="/supervised" width: auto; height: auto; min-width: 430px;min-height: 600px;> HOME <a></label>
+                   
+                    <a href="/supervised" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            
         </a>
@@ -40,7 +42,7 @@
     
             <form method="POST" action="/supervised/decisiontree/tree" enctype="multipart/form-data">
                 <h4 style="color: #fff;">Upload your preprocessed dataset here:</h4>
-                <p style="color: beige;">( please do dataset for classification. )</p>
+                <p style="color: beige;"> please upload dataset for Decision tree cllassification</p>
                 <div class="input-group">
                     
                     <input type="file" class="form-control" name="my_dataset" placeholder="hi" accept=".csv,.xlsx">
@@ -65,23 +67,23 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" value="multiclass" type="radio" name="classification" id="class2" checked>
-                    <label class="form-check-label" for="multiclass" style="color: whitesmoke;">
+                    <label class="form-check-label" for="multiclass" style="color: black;">
                        Multiclass  
                     </label>
                 </div>
                 <br><br>
                 
                 <br>
-                <h4 style="color: white;">Do you like to do Data Standerization ?</h4>
+                <h4 style="color: black;">Do you like to do Data Standerization ?</h4>
                 <div class="form-check">
                     <input class="form-check-input" value="yes" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1" style="color: whitesmoke;">
+                    <label class="form-check-label" for="flexRadioDefault1" style="color: green;">
                         Yes 
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" value="no" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2" style="color: whitesmoke;">
+                    <label class="form-check-label" for="flexRadioDefault2" style="color: red;">
                         No  
                     </label>
                 </div>

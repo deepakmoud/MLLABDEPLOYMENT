@@ -14,6 +14,7 @@
     <title>Machine Learning Lab</title>
 </head>
 <body>
+
     <!-- navbar -->
     <nav style="width: 100%;" class="navbar navbar-dark bg-secondary">
         <a class="  navbar-brand" href="#" style="margin-left: 25px;">
@@ -21,7 +22,7 @@
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           
             <ul class="nav navbar-nav navbar-right">
-           <li><a href="/">HOME</a></li>
+           <a href="/" style="color: red; margin-right: 10px;">HOME</a>
            </ul>
         </a>
     </nav>
@@ -79,7 +80,7 @@
                         <h5 class="card-title"> K Means Clustering</h5>
                         <p class="card-text"> K-Means Clustering is an Unsupervised Learning algorithm, which groups the unlabeled dataset into different clusters. Here K defines the number of pre-defined clusters that need to be created in the process, as if K=2, there will be two clusters, and for K=3, there will be three clusters, and so on.
 
-It is an iterative algorithm that divides the unlabeled dataset into k different clusters in such a way that each dataset belongs only one group that has similar properties.</p>
+It is an iterative algorithm that divides the unlabeled dataset into k different clusters in such a way that each dataset belongs only one group that has similar properties.It is based on centroid. Euclidean distance is calculated.</p>
                         <a href="/unsupervised/kmeans/kmeans"><button type="button"
                                 class="btn btn-outline-primary">Train k Means Clustering Algorithm &#x270C;</button></a>
                     </div>
@@ -95,9 +96,9 @@ It is an iterative algorithm that divides the unlabeled dataset into k different
                             class="card-img-top" alt="not found"></center>
                     <div class="card-body">
                         <h5 class="card-title">Hierarchical Clustering</h5>
-                        <p class="card-text"> This algorithm, we develop the hierarchy of clusters in the form of a tree, and this tree-shaped structure is known as the dendrogram.
+                        <p class="card-text"; text-allign="justify"> This algorithm, we develop the hierarchy of clusters in the form of a tree, and this tree-shaped structure is known as the dendrogram.
 
-Sometimes the results of K-means clustering and hierarchical clustering may look similar, but they both differ depending on how they work. As there is no requirement to predetermine the number of clusters as we did in the K-Means algorithm.
+
 
 The hierarchical clustering technique has two approaches:
 
@@ -120,8 +121,8 @@ Divisive: Divisive algorithm is the reverse of the agglomerative algorithm as it
                         <h5 class="card-title">Density Based Clustering</h5>
                         <p class="card-text"> Density-based spatial clustering of applications with noise (DBSCAN) is a well-known data clustering algorithm that is commonly used in data mining and machine learning.
 Based on a set of points (let’s think in a bidimensional space as exemplified in the figure), DBSCAN groups together points that are close to each other based on a distance measurement (usually Euclidean distance) and a minimum number of points. It also marks as outliers the points that are in low-density regions.
-Parameters:
-The DBSCAN algorithm basically requires 2 parameters:
+
+
                         </p>
                         <a href="/unsupervised/dbscan/dbscan"><button type="button"
                                 class="btn btn-outline-primary">Train Density based  Clustering Model &#x270C;</button></a>
