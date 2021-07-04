@@ -111,9 +111,9 @@ def download_model():
     return send_file(path1,as_attachment=True)
 
 #------------------------------About us-------------------------------------------
-@app.route('/aboutus')
-def aboutus():
-    return render_template('aboutus.html')
+@app.route('/aboutusnew')
+def aboutusnew():
+    return render_template('aboutusnew.html')
 #------------------------------Supervised machine Learning-------------------------------------------
 # for suprvised learning
 
@@ -167,7 +167,7 @@ def simpleLinearRegression():
         testing_score = regressor.score(X_test, y_test)
 
         # visulization 
-        #plt.scatter(li[0], li[1], color='red')
+        plt.scatter(df.iloc[:,0],y, color='red')
         plt.plot(X, regressor.predict(X), color='blue')
         plt.title('{} VS {}'.format(li[0], li[1]))
         plt.xlabel('{}'.format(li[0]))
@@ -180,7 +180,10 @@ def simpleLinearRegression():
         get_plot1 = os.path.join(app.config['LR1VARplot'], '%s.png' % img_name)
         print(get_plot1)
         plt.clf()
-
+        import pickle 
+        print("[INFO] Saving model...")
+        # Save the trained model as a pickle string. 
+        saved_model=pickle.dump(regressor,open("static/data-preprocess/model/model.pkl", 'wb')) 
     
         return render_template('/supervised/regression/outputSimLR.html', dataset_name=my_dataset.filename, 
                                model_name=my_model_name,var1=intercept,var2=slope, visualize=get_plot1,
@@ -236,6 +239,7 @@ def logisticregression():
         my_model_name = request.form['name_of_model1']
         data_std = request.form['flexRadioDefault']
         class_type=request.form['classification']
+        print(class_type)
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
@@ -270,7 +274,7 @@ def logisticregression():
             X_test = sc.transform(X_test)
         # Fitting Logistic  Classification to the Training set
         from sklearn.linear_model  import LogisticRegression
-        classifier = LogisticRegression(random_state=0)
+        classifier = LogisticRegression(random_state=0,max_iter=1000)
         classifier.fit(X_train, y_train)
         # Predicting the Test set results
         y_pred = classifier.predict(X_test)
@@ -280,17 +284,18 @@ def logisticregression():
         
         
         Accuracy= accuracy_score(y_test, y_pred)*100
-        print(Accuracy)
+        
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type=="binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -347,7 +352,8 @@ def logisticregressionPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -373,6 +379,7 @@ def decisiontree():
         my_model_name = request.form['name_of_model']
         data_std = request.form['flexRadioDefault']
         class_type=request.form['classification']
+        print(class_type)
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
@@ -425,9 +432,10 @@ def decisiontree():
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -483,7 +491,8 @@ def decisiontreePred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -508,6 +517,7 @@ def naivebayes():
         print(my_model_name)
         data_std = request.form['flexRadioDefault']
         class_type=request.form['classification']
+        print(data_std)
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
@@ -538,6 +548,7 @@ def naivebayes():
         if data_std == "yes":
             from sklearn.preprocessing import StandardScaler
             sc = StandardScaler()
+            
             X_train = sc.fit_transform(X_train)
             X_test = sc.transform(X_test)
         # Fitting Naive Bayes to the Training set
@@ -556,13 +567,14 @@ def naivebayes():
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type =="binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -620,7 +632,8 @@ def naivebayesPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -693,13 +706,14 @@ def randomforest():
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -757,7 +771,8 @@ def randomforestPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -833,13 +848,14 @@ def svm():
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -897,7 +913,8 @@ def svmPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -971,15 +988,16 @@ def knn():
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
-        print("[INFO] Saving model...")
+        
         # Save the trained model as a pickle string. 
         saved_model=pickle.dump(classifier,open("static/data-preprocess/model/model.pkl", 'wb')) 
     
@@ -1035,7 +1053,8 @@ def knnPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -1067,7 +1086,8 @@ def kmeans():
         my_dataset = request.files['my_dataset']
         my_model_name = request.form['name_of_model1']
         data_std = request.form['flexRadioDefault']
-        
+        ncluster = int(request.form['ncluster'])
+        print(ncluster)
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
@@ -1120,7 +1140,7 @@ def kmeans():
         plt.clf()
         # Fitting K-Means to the dataset
         from sklearn.cluster import KMeans
-        kmeans = KMeans(n_clusters = 5, init = 'k-means++', random_state = 42)
+        kmeans = KMeans(n_clusters =ncluster, init = 'k-means++', random_state = 42)
         y_kmeans = kmeans.fit_predict(X)
         var1=kmeans.inertia_
         var2=kmeans.cluster_centers_ 
@@ -1241,6 +1261,9 @@ def hierarchical():
         my_dataset = request.files['my_dataset']
         my_model_name = request.form['name_of_model1']
         data_std = request.form['flexRadioDefault']
+        ncluster = int(request.form['ncluster'])
+        
+        
         
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
@@ -1292,7 +1315,7 @@ def hierarchical():
         plt.clf()
         # Fitting Hierarchical Clustering to the dataset
         from sklearn.cluster import AgglomerativeClustering
-        hc = AgglomerativeClustering(n_clusters = 5, affinity = 'euclidean', linkage = 'ward')
+        hc = AgglomerativeClustering(n_clusters = ncluster, affinity = 'euclidean', linkage = 'ward')
         y_hc = hc.fit_predict(X)
         
         from scipy.cluster.hierarchy import dendrogram, linkage
@@ -1615,6 +1638,8 @@ def pca():
         my_model_name = request.form['name_of_model1']
         data_std = request.form['flexRadioDefault']
         class_type=request.form['classification']
+        ncomponenets=int(request.form['ncomponents'])
+        print(ncomponenets)
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
@@ -1655,7 +1680,7 @@ def pca():
         var5=explained_variance
         # Applying PCA
         from sklearn.decomposition import PCA
-        pca1 = PCA(n_components = 3)
+        pca1 = PCA(n_components = ncomponenets)
         X_train = pca1.fit_transform(X_train)
         X_test = pca1.transform(X_test)
         explained_variance = pca1.explained_variance_ratio_
@@ -1680,9 +1705,10 @@ def pca():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -1814,17 +1840,16 @@ def lda():
         if class_type == "multiclass":
             # Applying LDA
             from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-            lda1 = LDA(n_components = 2)
-            X_train = lda1.fit_transform(X_train, y_train)
-            X_test = lda1.transform(X_test)
+            lda = LDA(n_components = 2)
+            X_train = lda.fit_transform(X_train, y_train)
+            X_test = lda.transform(X_test)
             var6=explained_variance
-       
-       # Applying LDA
-        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-        lda = LDA(n_components = 1)
-        X_train = lda.fit_transform(X_train, y_train)
-        X_test = lda.transform(X_test)
-        var6=explained_variance
+        else:
+           from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+           lda = LDA(n_components = 1)
+           X_train = lda.fit_transform(X_train, y_train)
+           X_test = lda.transform(X_test)
+           var6=explained_variance
         
        # Fitting SVM to the Training set
         from sklearn.svm import SVC
@@ -1846,13 +1871,14 @@ def lda():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
-        saved_model=pickle.dump(lda1,open("static/data-preprocess/model/model.pkl", 'wb')) 
+        saved_model=pickle.dump(lda,open("static/data-preprocess/model/model.pkl", 'wb')) 
     
         return render_template('/feature/lda/ldaoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=Accuracy,
                                var2=precision,var3=recall, var4=score,var5=var5, var6=var6, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
@@ -2060,7 +2086,7 @@ def filter2():
             X_test= fs.transform(X_test)
            
             var4= X_selected[1].shape
-            print(var4)
+            
         elif selection_method == "annova":
             # pearson's correlation feature selection for numeric input and numeric output
             from sklearn.datasets import make_regression
@@ -2102,9 +2128,10 @@ def filter2():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -2588,9 +2615,21 @@ def sentiment():
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
         my_dataset.save(dataset_path)
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
-        
-        df = pd.read_csv(get_dataset, delimiter="\t", quoting=3)
+        input=secure_filename(my_dataset.filename)
+        extension= input.split(".")
+        extension=extension[1]
+        print(extension)
+        if extension == "csv":
+            df = pd.read_csv(get_dataset)
+        else:
+            #target=df.iloc[:,-1].values
+            #print(target)
+            df = pd.read_csv(get_dataset, delimiter="\t", quoting=3,nrows=1000)
         # Cleaning the texts for all review using for loop
+        df = df.dropna()
+        #target=df.iloc[:,-1].values
+        #df.reset_index(inplace = True) 
+        #df = df.drop(['index'], axis = 1) 
         import re
         import nltk
         nltk.download('stopwords')
@@ -2598,23 +2637,25 @@ def sentiment():
         from nltk.stem.porter import PorterStemmer
         corpus = []
         for i in range(0, df.shape[0]):
-            review = re.sub('[^a-zA-Z]', ' ', df['Review'][i])
+            review = re.sub('[^a-zA-Z]', ' ', df.iloc[:,0][i])
             review = review.lower()
             review = review.split()
             ps = PorterStemmer()
             review = [ps.stem(word) for word in review if not word in set(stopwords.words('english'))]
             review = ' '.join(review)
-    
-            corpus.append(review)#df = df.fillna(method='ffill')
+            corpus.append(review)
+       
         # Creating the Bag of Words model
         from sklearn.feature_extraction.text import CountVectorizer
         cv = CountVectorizer(max_features = 1500)
 
         X = cv.fit_transform(corpus).toarray()
-        y = df.iloc[:, 1].values
+        
+        y = df.iloc[:,-1].values
+        
         # Splitting the dataset into the Training set and Test set
         from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)#col_no = df.shape[1]
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)
 
         
 
@@ -2635,13 +2676,14 @@ def sentiment():
         from sklearn.metrics import precision_score
         from sklearn.metrics import recall_score
         from sklearn.metrics import f1_score
-        if class_type == "multiclass":
+        if class_type == "binary":
+            precision = precision_score(y_test, y_pred, average='binary')
+            recall = recall_score(y_test, y_pred, average='binary')
+            score = f1_score(y_test, y_pred, average='binary')
+        else:
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='binary')
-        recall = recall_score(y_test, y_pred, average='binary')
-        score = f1_score(y_test, y_pred, average='binary')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
