@@ -292,9 +292,10 @@ def logisticregression():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -351,7 +352,8 @@ def logisticregressionPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -430,9 +432,10 @@ def decisiontree():
             precision = precision_score(y_test, y_pred, average='macro')
             recall = recall_score(y_test, y_pred, average='macro')
             score = f1_score(y_test, y_pred, average='macro')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -488,7 +491,8 @@ def decisiontreePred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -567,9 +571,10 @@ def naivebayes():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -627,7 +632,8 @@ def naivebayesPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -704,9 +710,10 @@ def randomforest():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -764,7 +771,8 @@ def randomforestPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -844,9 +852,10 @@ def svm():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -904,7 +913,8 @@ def svmPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -982,9 +992,10 @@ def knn():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         
         # Save the trained model as a pickle string. 
@@ -1042,7 +1053,8 @@ def knnPred():
         classifier.fit(X_train, y_train)
         if data_std == "yes":
             output = classifier.predict(sc.transform([[num1,num2]]))
-        output = classifier.predict([[num1,num2]])
+        else:
+            output = classifier.predict([[num1,num2]])
         if output==[1]:
             prediction="Item will be purchased"
         else:
@@ -1250,7 +1262,7 @@ def hierarchical():
         my_model_name = request.form['name_of_model1']
         data_std = request.form['flexRadioDefault']
         ncluster = int(request.form['ncluster'])
-        print(ncluster)
+        
         
         
         dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
@@ -1693,9 +1705,10 @@ def pca():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -1828,16 +1841,15 @@ def lda():
             # Applying LDA
             from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
             lda = LDA(n_components = 2)
-            X_train = lda1.fit_transform(X_train, y_train)
-            X_test = lda1.transform(X_test)
+            X_train = lda.fit_transform(X_train, y_train)
+            X_test = lda.transform(X_test)
             var6=explained_variance
-       
-       # Applying LDA
-        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-        lda = LDA(n_components = 1)
-        X_train = lda.fit_transform(X_train, y_train)
-        X_test = lda.transform(X_test)
-        var6=explained_variance
+        else:
+           from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+           lda = LDA(n_components = 1)
+           X_train = lda.fit_transform(X_train, y_train)
+           X_test = lda.transform(X_test)
+           var6=explained_variance
         
        # Fitting SVM to the Training set
         from sklearn.svm import SVC
@@ -1859,9 +1871,10 @@ def lda():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -2073,7 +2086,7 @@ def filter2():
             X_test= fs.transform(X_test)
            
             var4= X_selected[1].shape
-            print(var4)
+            
         elif selection_method == "annova":
             # pearson's correlation feature selection for numeric input and numeric output
             from sklearn.datasets import make_regression
@@ -2115,9 +2128,10 @@ def filter2():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -2604,7 +2618,7 @@ def sentiment():
         input=secure_filename(my_dataset.filename)
         extension= input.split(".")
         extension=extension[1]
-        print(extension)
+        
         if extension == "csv":
             df = pd.read_csv(get_dataset)
         else:
@@ -2666,9 +2680,10 @@ def sentiment():
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             score = f1_score(y_test, y_pred, average='binary')
-        precision = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average='macro')
-        score = f1_score(y_test, y_pred, average='macro')
+        else:
+            precision = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average='macro')
+            score = f1_score(y_test, y_pred, average='macro')
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
@@ -2686,19 +2701,45 @@ def sentimentPred():
        
         
         my_dataset = request.form['my_dataset']
+        print(my_dataset)
         
-       
         get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset))
-        df = pd.read_csv(get_dataset, delimiter="\t", quoting=3)
-        # Cleaning the texts for all review using for loop
+        extension= my_dataset.split(".")
+        extension=extension[1]
         
+        if extension == "csv":
+            df = pd.read_csv(get_dataset)
+        else:
+            #target=df.iloc[:,-1].values
+            #print(target)
+            df = pd.read_csv(get_dataset, delimiter="\t", quoting=3,nrows=1000)
+        # Cleaning the texts for all review using for loop
+        df = df.dropna()
+        
+        
+        #dataset_path = os.path.join(pathforonevarLR, secure_filename(my_dataset.filename))
+        #my_dataset.save(dataset_path)
+        #get_dataset = os.path.join(app.config['LR1VAR'], secure_filename(my_dataset.filename))
+        #input=secure_filename(my_dataset.filename)
+        #extension= input.split(".")
+        #extension=extension[1]
+        
+        #if extension == "csv":
+        #df = pd.read_csv(get_dataset)
+       #else:
+            #target=df.iloc[:,-1].values
+            #print(target)
+            #df = pd.read_csv(get_dataset, delimiter="\t", quoting=3,nrows=1000)
+        
+        # Cleaning the texts for all review using for loop
+        #df = df.dropna()
         import nltk
         nltk.download('stopwords')
         from nltk.corpus import stopwords
         from nltk.stem.porter import PorterStemmer
         corpus = []
         for i in range(0, df.shape[0]):
-            review = re.sub('[^a-zA-Z]', ' ', df['Review'][i])
+            review = re.sub('[^a-zA-Z]', ' ', df.iloc[:,0][i])
             review = review.lower()
             review = review.split()
             ps = PorterStemmer()
