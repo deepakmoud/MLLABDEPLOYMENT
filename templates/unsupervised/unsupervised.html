@@ -38,7 +38,7 @@
     
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
                 <h1>Unsupervised Machine Learning Models</h1>
-                <h4 style="color: sandybrown;text-allign='justify'">unsupervised learning techniques operate without known outputs or observations – that is, these techniques are not trying to predict any specific outcomes. Instead, unsupervised techniques attempt to uncover patterns within data sets. Unsupervised learning is a useful approach for problems that do not have sufficient output or example data to train a supervised model.</h4>
+                <h4 style="color: sandybrown"; style="text-align:justify">unsupervised learning techniques operate without known outputs or observations – that is, these techniques are not trying to predict any specific outcomes. Instead, unsupervised techniques attempt to uncover patterns within data sets. Unsupervised learning is a useful approach for problems that do not have sufficient output or example data to train a supervised model.</h4>
                 <br>
                 <div class="row">
                     <div class="col-6">
@@ -77,8 +77,8 @@
                     <center> <img src="{{ url_for('static',filename = 'image/K_means_Clustering.gif')  }}" style="height: 275px;"
                             class="card-img-top" alt="not found"></center>
                     <div class="card-body">
-                        <h5 class="card-title"> K Means Clustering</h5>
-                        <p class="card-text"> K-Means Clustering is an Unsupervised Learning algorithm, which groups the unlabeled dataset into different clusters. Here K defines the number of pre-defined clusters that need to be created in the process, as if K=2, there will be two clusters, and for K=3, there will be three clusters, and so on.
+                        <h5 class="card-title"; style="text-align:center"> K Means Clustering</h5>
+                        <p class="card-text"; style="text-align:justify"> K-Means Clustering is an Unsupervised Learning algorithm, which groups the unlabeled dataset into different clusters. Here K defines the number of pre-defined clusters that need to be created in the process, as if K=2, there will be two clusters, and for K=3, there will be three clusters, and so on.
 
 It is an iterative algorithm that divides the unlabeled dataset into k different clusters in such a way that each dataset belongs only one group that has similar properties.It is based on centroid. Euclidean distance is calculated.</p>
                         <a href="/unsupervised/kmeans/kmeans"><button type="button"
@@ -95,8 +95,8 @@ It is an iterative algorithm that divides the unlabeled dataset into k different
                     <center> <img src="{{ url_for('static',filename = 'image/hierarch.gif')  }}" style="height: 275px;"
                             class="card-img-top" alt="not found"></center>
                     <div class="card-body">
-                        <h5 class="card-title">Hierarchical Clustering</h5>
-                        <p class="card-text"; text-allign="justify"> This algorithm, we develop the hierarchy of clusters in the form of a tree, and this tree-shaped structure is known as the dendrogram.
+                        <h5 class="card-title"; style="text-align:center">Hierarchical Clustering</h5>
+                        <p class="card-text"; style="text-align:justify"> This algorithm, we develop the hierarchy of clusters in the form of a tree, and this tree-shaped structure is known as the dendrogram.
 
 
 
@@ -118,8 +118,8 @@ Divisive: Divisive algorithm is the reverse of the agglomerative algorithm as it
                     <center> <img src="{{ url_for('static',filename = 'image/DBSCAN_tutorial.gif')  }}" style="height: 275px;"
                             class="card-img-top" alt="not found"></center>
                     <div class="card-body">
-                        <h5 class="card-title">Density Based Clustering</h5>
-                        <p class="card-text"> Density-based spatial clustering of applications with noise (DBSCAN) is a well-known data clustering algorithm that is commonly used in data mining and machine learning.
+                        <h5 class="card-title"; style="text-align:center">Density Based Clustering</h5>
+                        <p class="card-text"; style="text-align:justify"> Density-based spatial clustering of applications with noise (DBSCAN) is a well-known data clustering algorithm that is commonly used in data mining and machine learning.
 Based on a set of points (let’s think in a bidimensional space as exemplified in the figure), DBSCAN groups together points that are close to each other based on a distance measurement (usually Euclidean distance) and a minimum number of points. It also marks as outliers the points that are in low-density regions.
 
 
@@ -147,8 +147,8 @@ Based on a set of points (let’s think in a bidimensional space as exemplified 
                     <center> <img src="{{ url_for('static',filename = 'image/aprori.jpg')  }}" class="card-img-top"
                             style="height: 275px;" alt="not found"> </center>
                     <div class="card-body">
-                        <h5 class="card-title">Apriori Algorithm</h5>
-                        <p class="card-text">The Apriori algorithm uses frequent itemsets to generate association rules, and it is designed to work on the databases that contain transactions. With the help of these association rule, it determines how strongly or how weakly two objects are connected. This algorithm uses a breadth-first search and Hash Tree to calculate the itemset associations efficiently. It is the iterative process for finding the frequent itemsets from the large dataset..</p>
+                        <h5 class="card-title"; style="text-align:center">Apriori Algorithm</h5>
+                        <p class="card-text"; style="text-align:justify">The Apriori algorithm uses frequent itemsets to generate association rules, and it is designed to work on the databases that contain transactions. With the help of these association rule, it determines how strongly or how weakly two objects are connected. This algorithm uses a breadth-first search and Hash Tree to calculate the itemset associations efficiently. It is the iterative process for finding the frequent itemsets from the large dataset..</p>
                             <a href="/unsupervised/apriori/apriori"><button type="button"
                                 class="btn btn-outline-primary">Aprori Algoritm Implementation &#x270C;</button></a>
                         
@@ -163,8 +163,8 @@ Based on a set of points (let’s think in a bidimensional space as exemplified 
                     <center><img src="{{ url_for('static',filename = 'image/FP growth.gif')  }}" style="height: 275px;"
                             class="card-img-top" alt="not found"></center>
                     <div class="card-body">
-                        <h5 class="card-title">Frequent pattern Growth  Algorithm</h5>
-                        <p class="card-text">This algorithm is an improvement to the Apriori method. A frequent pattern is generated without the need for candidate generation. FP growth algorithm represents the database in the form of a tree called a frequent pattern tree or FP tree.
+                        <h5 class="card-title"; style="text-align:center">Frequent pattern Growth  Algorithm</h5>
+                        <p class="card-text"; style="text-align:justify">This algorithm is an improvement to the Apriori method. A frequent pattern is generated without the need for candidate generation. FP growth algorithm represents the database in the form of a tree called a frequent pattern tree or FP tree.
 
 This tree structure will maintain the association between the itemsets. The database is fragmented using one frequent item. This fragmented part is called “pattern fragment”.  </p>
                        <a href="/unsupervised/fp/fp"><button type="button"
@@ -191,7 +191,7 @@ This tree structure will maintain the association between the itemsets. The data
     <div class="bg-secondary " style="min-height: 40px;">
 
         <marquee style="color:#fff; margin-top: 7px;">
-            <h9>Developed by Deepak Moud</h9>
+            <h9>Developed by Department of Computer Engineering, PIET</h9>
         </marquee>
     </div>
 </div>

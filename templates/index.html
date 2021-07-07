@@ -40,7 +40,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 " style=" padding: 30px;">
                 <h1>Machine Learning  Experiment Solutions</h1>
                 <br><br>
-                <p style="font-size:20px;text-align:justify; color:blue; font-family:verdana;">It is  a web portal to understand basics of Machine Learning. It helps to understand data preprocessing, Supervised machine learning, Unsupervised Machine Learning, Feature Engineering, Feature selection and Natural language processing. It allows user to upload datasets and to be pre processed. It creates Machine Learning Model on Given datasets. It Extracts relevant features from datasets and also tranform Features. Natural languge Processing model is also constructed.NLP model is used to identify sentiment of given comment. It is also used to translate from one langauge into another.   </p>
+                <p style="font-size:20px; color:blue; font-family:verdana;"; style="text-align:justify">It is  a web portal to understand basics of Machine Learning. It helps to understand data preprocessing, Supervised machine learning, Unsupervised Machine Learning, Feature Engineering, Feature selection and Natural language processing. It allows user to upload datasets and to be pre processed. It creates Machine Learning Model on Given datasets. It Extracts relevant features from datasets and also tranform Features. Natural languge Processing model is also constructed.NLP model is used to identify sentiment of given comment. It is also used to translate from one langauge into another.   </p>
               
                 
                 <br><br>
@@ -58,8 +58,8 @@
                         <img style="max-height: 300px;" src="{{ url_for('static',filename = 'image/dp ml.jpg')  }}"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Data PreProcessing for ML</h5>
-                            <p class="card-text">Data preprocessing is a process of preparing the raw data and making it suitable for a machine learning model. It is the first and crucial step while creating a machine learning model. Data preprocessing is neccessory to train ml model.</p>
+                            <h5 class="card-title"; style="text-align:center">Data PreProcessing for ML</h5>
+                            <p class="card-text"; style="text-align:justify">Data preprocessing is a process of preparing the raw data and making it suitable for a machine learning model. It is the first and crucial step while creating a machine learning model. Data preprocessing is neccessory to train ml model.</p>
             
                             <a href="/preprocessing"><button type="button" class="btn btn-outline-primary">Data-Preprocessing for Machine Learning
                                     &#9655;</button></a>
@@ -77,8 +77,8 @@
                             src="{{ url_for('static',filename = 'image/supervised ml.jpg')  }}"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Supervised Machine Learning</h5>
-                            <p class="card-text">Supervised learning is the machine learning task of learning a function
+                            <h5 class="card-title"; style="text-align:center">Supervised Machine Learning</h5>
+                            <p class="card-text"; style="text-align:justify">Supervised learning is the machine learning task of learning a function
                                 that maps an
                                 input to an output based on example input-output pairs. It infers a function from
                                 labeled training data
@@ -100,8 +100,8 @@
                             src="{{ url_for('static',filename = 'image/unsupervised ml.jpg')  }}"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Unsupervised Machine Learning</h5>
-                            <p class="card-text">Unsupervised learning is a type of algorithm that learns patterns from
+                            <h5 class="card-title"; style="text-align:center">Unsupervised Machine Learning</h5>
+                            <p class="card-text"; style="text-align:justify">Unsupervised learning is a type of algorithm that learns patterns from
                                 untagged data.
                                 The hope is that through mimicry, the machine is forced to build a
                                 compact internal representation of its world and then generate imaginative content.</p>
@@ -122,8 +122,8 @@
                             src="{{ url_for('static',filename = 'image/feature.jpg')  }}"
                             class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Feature Selection and Engineering</h5>
-                                <p class="card-text">Feature engineering is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. A feature is a property shared by independent units on which analysis or prediction is to be done. Features are used by predictive models and influence results..</p>
+                                <h5 class="card-title"; style="text-align:center">Feature Selection and Engineering</h5>
+                                <p class="card-text"; style="text-align:justify">Feature engineering is the process of using domain knowledge to extract features (characteristics, properties, attributes) from raw data. A feature is a property shared by independent units on which analysis or prediction is to be done. Features are used by predictive models and influence results..</p>
 
                             <a href="/feature"><button type="button" class="btn btn-outline-primary">Explore Feature Engineering and Feature Selection &#9655;</button></a>
                         </div>
@@ -141,10 +141,10 @@
                             src="{{ url_for('static',filename = 'image/nlp.jpg')  }}"
                             class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Natural Language Processing</h5>
-                                <p class="card-text">Natural language processing (NLP) refers to the branch of computer science—and more specifically, the branch of artificial intelligence or AI—concerned with giving computers the ability to understand text and spoken words in much the same way human beings can.</p>
+                                <h5 class="card-title"; style="text-align:center">Natural Language Processing</h5>
+                                <p class="card-text" ; style="text-align:justify">Natural language processing (NLP) refers to the branch of computer science—and more specifically, the branch of artificial intelligence or AI—concerned with giving computers the ability to understand text and spoken words in much the same way human beings can.</p>
 
-                            <a href="/nlp"><button type="button" class="btn btn-outline-primary">Explore Natural Language Processing &#9655;</button></a>
+                            <a href="/nlp"><button type="button" class="btn btn-outline-primary" style="text-align:center">Explore Natural Language Processing &#9655;</button></a>
                         </div>
 
 
@@ -153,12 +153,74 @@
             </div>
         </div>
     </div>
-    <br><br><br><br><br><br>
+    <br>
+    
+    <div class="col-md-12">
+              <center><h3 class="section-title" style="text-align: center;">Sponsored by</h3></center>
+            </div>
+          
+          <br>
+          <br>
+    
+      <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="card mb-3">
+            
+                    <div class="card">
+                        <img style="max-height: 200px;" src="{{ url_for('static',filename = 'image/AICTEIdeaLabFooterLogo.png')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align:center">IDEA LAB</h5>
+                            
+                        </div>
+            
+            
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-md-4">
+                <div class="card mb-3">
+            
+                    <div class="card">
+                        <img style="max-height: 200px;" src="{{ url_for('static',filename = 'image/eNBA_logo.png')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align:center">NBA</h5>
+                            
+                        </div>
+            
+            
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-10 col-md-3">
+                <div class="card mb-3">
+
+                    <div class="card">
+                        <img style="max-height: 200px;"
+                            src="{{ url_for('static',filename = 'image/aicte-logo.png')  }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"; style="text-align:center">AICTE MODROB DEEP LEARNING LAB</h5>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        
+               
+    
+    <br><br><br><br><br>
     <div class="fixed-bottom ">
         <div class="bg-secondary " style="min-height: 40px;">
 
             <marquee style="color:#fff; margin-top: 7px;">
-                <h9>Developed by Deepak Moud</h9>
+                <h9>Developed by Department of Computer Engineering, PIET</h9>
             </marquee>
         </div>
     </div>
