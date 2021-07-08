@@ -15,14 +15,14 @@
 
 </head>
 
-<body style="background-color:  #bad2c5;">
+<body style="background-color: #aaf661;">
     <nav class="navbar navbar-dark bg-secondary">
         <a class="navbar-brand" href="#" style="margin-left: 25px;">
           
             <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
              class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
           <div style="margin-top: 10px; margin-Right: 10px; color: white;">
-                    <a href="/feature" style="color: red; margin-right: 10px;">HOME</a>
+                    <a href="/nlp" style="color: red; margin-right: 10px;">HOME</a>
                 </div>
            </a>
             
@@ -34,7 +34,7 @@
         <div class="output">
             <br>
             <center>
-            <h1>Classsification based on Feature Selection </h1>
+            <h1>Sentiment Analysis </h1>
                 <h2>&#127881;&#127882; Hurrey Your Model Predecited Successfully&#127881;&#127882; </h2>
             </center>
             <br><br>
@@ -42,7 +42,7 @@
             <br>
             <h4><span class="outputtext">🏹 Model Name : </span> {{model_name}}</h4>
             <br>
-            <h4><span class="outputtext">🏹 Predicted value for given input1{{first_col}} and input 2: {{second_col}}  is :</span> {{third_col}}</h4>
+            <h4><span class="outputtext">🏹Sentiment for Comment:  {{first_col}} is </span> {{second_col}}</h4>
             
             <br>
             
@@ -66,4 +66,3 @@
 </body>
 
 </html>
-

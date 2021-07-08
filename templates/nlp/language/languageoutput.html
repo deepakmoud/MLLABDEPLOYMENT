@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static',filename = 'css/bootstrap.min.css')  }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename = 'css/style.css')  }}" rel="stylesheet">
+    <title>ML Trainer</title>
+
+</head>
+
+<body style="background-color: #aaf661;">
+    <nav class="navbar navbar-dark bg-secondary">
+        <a class="navbar-brand" href="#" style="margin-left: 25px;">
+            <img src="{{ url_for('static',filename = 'image/logo.png')  }}" 
+             class="img-responsive" style="margin-top:10px;style="width: auto; height: auto; min-width: 430px;min-height: 600px;">
+          
+            
+           <div style="margin-top: 10px; margin-Right: 10px; color: white;">
+                    <a href="/nlp" style="color: red; margin-right: 10px;">HOME</a>
+                </div>
+           
+        </a>
+    </nav>
+
+    <div class="container">
+        <div class="output">
+            <br><br>
+            <center>
+                <h1> Sentiment Analysis</h1>
+                <h1>&#127881;&#127882; Hurrey Your Model Trained Successfully &#127882;&#127881;</h1>
+            </center>
+            <br><br>
+            <h4><span class="outputtext">🏹 Dataset Name : </span> {{dataset_name}}</h4>
+            <br>
+            <h4><span class="outputtext">🏹 Model Name : </span> {{model_name}}</h4>
+            <br>
+            <h4><span class="outputtext">🏹 The Top 5 Rows Of Your Dataset </span> </h4>
+            <br>
+            <div class="python-code">
+                <h6 style="text-decoration: underline; font-weight: bold;">The head() function is used to get the first
+                    n rows.</h6>
+                <li>Example :</li>
+                <p style="padding-left: 80px;">dataframe.head(5)</p>
+            </div>
+            <br>
+            Output &#128071;
+            <br>
+            <br>
+            {{table | safe}}
+
+            <br>
+
+            <h4><span class="outputtext">🏹 Dataset Description </span> </h4>
+            <br>
+            {{dataset_describe | safe}}
+
+            <br>
+            <h4><span class="outputtext">🏹 Dataset Shape : {{data_shape}} </span> </h4>
+            <br>
+            
+            <br>
+            <h4><span class="outputtext">🏹 The Training Accuracy :</span> <span style="color:rgb(141, 148, 245);;">
+                    {{var1}} </span></h4>
+            <br>
+            <h4><span class="outputtext">🏹 Precision :</span> <span style="color:rgb(141, 148, 245);;">
+                    {{var2}} </span></h4>
+            <br>
+            <br>
+            <h4><span class="outputtext">🏹 Recall :</span> <span style="color:rgb(141, 148, 245);;">
+                    {{var3}} </span></h4>
+            <br>
+            <br>
+            <h4><span class="outputtext">🏹 F-score :</span> <span style="color:rgb(141, 148, 245);;">
+                    {{var4}} </span></h4>
+            <br>
+           
+            <h4><span class="outputtext">You can Download Model here: 
+                <a href="{{url_for('download_model')}}"> <button type="button" class="btn btn-outline-primary">Download Model &#9655;</button></a>
+            </span>
+            </h4>
+            
+            <br><br>
+
+
+
+
+
+
+
+
+            <form method="POST" action="/nlp/sentiment/sentimentoutput" enctype="multipart/form-data">
+               
+                <h4>Please upload datset for sentiment analysis. dataset must contain Dataset  Must have two colunms 1. Comment/Review(Feature) and second column must be target like Liked/class/sentiment(0/1) </h4>
+               <h4><h4>Model will find out sentiment of given Comment </h4> </h4>
+                <div class="input-group">
+                    <span class="input-group-text">Enter Your dataset name</span>
+                    <input type="text" name="my_dataset" class="form-control">
+                </div><br>
+                <div class="input-group">
+                    <span class="input-group-text">Enter Review {{first_col}}</span>
+                    <input type="text"  name="review" class="form-control">          
+                </div><br>
+               
+                <br><br>
+                <button onclick="$('#loading').show();" type="submit" class="btn btn-outline-primary">Predict {{second_col}} &#8987;
+                </button>
+                <br>
+            </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <br><br><br><br>
+    <!-- footer -->
+    <div class="fixed-bottom ">
+        <div class="bg-secondary " style="min-height: 40px;">  
+            <marquee style="color:#fff; margin-top: 7px;">
+                <h9>Developed by Department of Computer Engineering, PIET</h9>
+            </marquee>
+        </div>
+    </div>
+    <!-- change later-->
+    <script src="{{ url_for('static',filename = 'js/bootstrap.bundle.min.js')  }}"></script>
+
+</body>
+
+</html>
