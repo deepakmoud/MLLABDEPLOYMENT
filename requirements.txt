@@ -32,7 +32,7 @@ yarg==0.1.9
 mlxtend==0.18.0
 nltk
 flask-login==0.5.0
-requests==2.21.0
+
 
 oauthlib
 pyOpenSSL
