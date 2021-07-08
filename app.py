@@ -1172,15 +1172,17 @@ def kmeans():
         fig.savefig('static/kmeans/plot/after.png', dpi=1500)
         #f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
         after_plot = os.path.join(app.config['elbowplot'], '%s.png' % img_name3)
-        print(after_plot)
+        
         plt.clf()
+       #removed from render template for heroku deployment
+        # visualize1=elbow_plot,visualize2=before_plot,
         import pickle 
         print("[INFO] Saving model...")
         # Save the trained model as a pickle string. 
         saved_model=pickle.dump(kmeans,open("static/data-preprocess/model/model.pkl", 'wb')) 
     
         return render_template('/unsupervised/kmeans/kmeansoutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=var1,
-                               var2=var2, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), visualize1=elbow_plot,visualize2=before_plot, 
+                               var2=var2, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'),  
                                visualize3=after_plot, dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
 
 #-------------------------------Kmeans clustering prediction(Specific dataset)-------------------------------------------
@@ -1354,7 +1356,8 @@ def hierarchical():
         fig.savefig('static/kmeans/plot/afterhierarchical.png', dpi=1500)
         #f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
         after_plot = os.path.join(app.config['elbowplot'], '%s.png' % img_name3)
-        print(after_plot)
+       # Removed from render Template for Heroku
+        #visualize1=elbow_plot,visualize2=before_plot, 
         plt.clf()
         import pickle 
         print("[INFO] Saving model...")
@@ -1362,7 +1365,7 @@ def hierarchical():
         saved_model=pickle.dump(kmeans,open("static/data-preprocess/model/model.pkl", 'wb')) 
     
         return render_template('/unsupervised/hierarchical/hierarchicaloutput.html', dataset_name=my_dataset.filename, model_name=my_model_name,var1=var1,
-                               var2=var2, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), visualize1=elbow_plot,visualize2=before_plot, 
+                               var2=var2, data_shape=df.shape, table=df.head(5).to_html( classes='table table-striped table-dark table-hover x'), 
                                visualize3=after_plot, dataset_describe=df.describe().to_html(classes='table table-striped table-dark table-hover x'))
 
 #-------------------------------Hierarchical clustering prediction(Specific dataset)-------------------------------------------
@@ -2785,7 +2788,15 @@ def sentimentPred():
         
        
         return render_template('/nlp/sentiment/sentimentpredicted.html', dataset_name=my_dataset, ans=prediction, model_name='Sentiment Analysis', first_col=review_input, second_col=prediction)
-#---------------Application----------------
+
+#----------------------Language Translation------------------------------
+
+
+@app.route('/nlp/language/language')
+def language1():
+    return render_template('/nlp/language/language.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     
