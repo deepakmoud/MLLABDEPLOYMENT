@@ -1,5 +1,5 @@
 from flask.helpers import send_file
-from jinja2 import Template
+
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
